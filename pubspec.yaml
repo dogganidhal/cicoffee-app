@@ -32,6 +32,8 @@ flutter:
   assets:
     - assets/logo.png
     - assets/coffee-time.png
+    - assets/facebook.png
+    - assets/google.png
   fonts:
     - family: ProductSans
       fonts:

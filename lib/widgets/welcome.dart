@@ -1,5 +1,6 @@
 import 'package:cicoffee_app/theme/assets.dart';
 import 'package:cicoffee_app/widgets/login.dart';
+import 'package:cicoffee_app/widgets/scroll_column_expandable.dart';
 import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +12,14 @@ class Welcome extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Column(
+          child: ScrollColumnExpandable(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
-                    height: 64,
+                    height: 48,
                     child: Image.asset(Assets.logo),
                   ),
                   Padding(
@@ -30,8 +31,8 @@ class Welcome extends StatelessWidget {
                           .headline4
                           .copyWith(
                           color: Theme.of(context).primaryColorDark,
-                          fontWeight: FontWeight.bold
-                      ),
+                              fontWeight: FontWeight.bold
+                          ),
                     ),
                   )
                 ],
@@ -59,23 +60,17 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        image: DecorationImage(
-                            image: AssetImage(Assets.coffeeTime),
-                            fit: BoxFit.fitWidth
-                        ),
-                      ),
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Image.asset(
+                      Assets.coffeeTime
                   )
+                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: ButtonTheme(
-                  height: 64,
+                  height: 56,
                   minWidth: 164,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,8 +81,10 @@ class Welcome extends StatelessWidget {
                         ),
                         color: Theme.of(context).primaryColor.withOpacity(0.25),
                         textColor: Theme.of(context).primaryColor,
-                        onPressed: () {},
-                        child: Text("S'inscrire"),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SignUp()
+                        )),
+                        child: Text("Sign up"),
                       ),
                       FlatButton(
                         shape: RoundedRectangleBorder(
@@ -95,8 +92,10 @@ class Welcome extends StatelessWidget {
                         ),
                         color: Theme.of(context).primaryColor,
                         textColor: Theme.of(context).backgroundColor,
-                        onPressed: () {},
-                        child: Text("Se connecter"),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Login()
+                        )),
+                        child: Text("Login"),
                       )
                     ],
                   ),

@@ -5,18 +5,25 @@ import 'package:flutter/material.dart';
 class CICoffeeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Color(0xff6355C3);
-    final primaryColorDark = Color(0xff1A2384);
+    final primaryColor = Color(0xff1A2384);
     return MaterialApp(
       title: 'CiCoffee',
       theme: ThemeData(
-        primaryColorDark: primaryColorDark,
-        primaryColor: primaryColorDark,
+        primaryColorDark: primaryColor,
+        primaryColor: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'ProductSans',
         cursorColor: primaryColor,
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          color: Colors.white,
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(
+            color: primaryColor
+          )
+        )
       ),
       home: AuthContainer(),
     );
