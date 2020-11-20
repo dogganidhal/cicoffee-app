@@ -3,6 +3,8 @@
 import 'package:cicoffee_app/api/dto/member_dto.dart';
 
 class TeamDto {
+  bool currentMemberIsCreator;
+
   /// Returns a new [TeamDto] instance.
   TeamDto({
     this.id,
@@ -17,32 +19,32 @@ class TeamDto {
       id = json['id'];
       name = json['name'];
       members = MemberDto.listFromJson(json['members']);
+      creator = MemberDto.fromJson(json['creator']);
     }
   }
 
 
   String id;
-
-
   String name;
-
-
   List<MemberDto> members;
+  MemberDto creator;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is TeamDto &&
      other.id == id &&
      other.name == name &&
-     other.members == members;
+     other.members == members &&
+      other.creator == creator;
 
   @override
   int get hashCode =>
     id.hashCode +
     name.hashCode +
-    members.hashCode;
+    members.hashCode +
+    creator.hashCode;
 
   @override
-  String toString() => 'TeamDto[id=$id, name=$name, members=$members]';
+  String toString() => 'TeamDto[id=$id, name=$name, members=$members, creator=$creator]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -54,6 +56,9 @@ class TeamDto {
     }
     if (members != null) {
       json['members'] = members;
+    }
+    if (creator != null) {
+      json['creator'] = creator;
     }
     return json;
   }

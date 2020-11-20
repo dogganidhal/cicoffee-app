@@ -4,6 +4,7 @@ import 'package:cicoffee_app/config/interceptor_wrapper.dart';
 import 'package:cicoffee_app/service/session.dart';
 import 'package:cicoffee_app/service/storage.dart';
 import 'package:cicoffee_app/store/auth/auth_store.dart';
+import 'package:cicoffee_app/store/hubs/hub_store.dart';
 import 'package:cicoffee_app/store/login/login_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/store/sign_up/sign_up_store.dart';
@@ -80,4 +81,5 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
     apiClient: apiClient,
     navigationStore: navigationStore
   ));
+  GetIt.instance.registerFactory<HubStore>(() => HubStore(apiClient: apiClient, session: session));
 }
