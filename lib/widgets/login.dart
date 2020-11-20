@@ -3,6 +3,7 @@ import 'package:cicoffee_app/theme/assets.dart';
 import 'package:cicoffee_app/widgets/scroll_column_expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,38 +17,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   bool _isPasswordTextObscure = true;
-  ReactionDisposer _disposer;
-
-  @override
-  void initState() {
-    super.initState();
-    _disposer = when((_) => widget.loginStore.error != null, () {
-      debugPrint("ERROR : ${widget.loginStore.error.errorCode}");
-      Scaffold
-          .of(_scaffoldKey.currentContext)
-          .showSnackBar(SnackBar(
-            duration: Duration(seconds: 10),
-            content: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("ERROR : ${widget.loginStore.error.errorCode}"),
-            ),
-          ));
-    });
-  }
-
-  @override
-  void dispose() {
-    _disposer.call();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -82,128 +57,147 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _form(BuildContext context) => FormBuilder(
-      key: _formKey,
-      child: ButtonTheme(
-        height: 56,
-        minWidth: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.all(24),
-          child: ScrollColumnExpandable(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 24),
-                child: Text(
-                  "Login",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      .copyWith(
-                      color: Theme.of(context).textTheme.bodyText1.color,
-                      fontWeight: FontWeight.w600
-                  ),
-                ),
-              ),
-              FormBuilderTextField(
-                attribute: "email",
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 0.5,
-                    ),
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  labelText: "Email",
-                ),
-                validators: [
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.email()
-                ],
-              ),
-              SizedBox(height: 24),
-              FormBuilderTextField(
-                attribute: "password",
-                maxLines: 1,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  focusColor: Theme.of(context).primaryColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  labelText: "Password",
-                  suffixIcon: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                        _isPasswordTextObscure ?
-                        Icons.visibility :
-                        Icons.visibility_off
-                    ),
-                    onPressed: _togglePasswordObscureText,
-                  ),
-                ),
-                obscureText: _isPasswordTextObscure,
-                validators: [
-                  FormBuilderValidators.required()
-                ],
-              ),
-              SizedBox(height: 24),
-              Center(
+  Widget _form(BuildContext context) => Observer(
+    builder: (context) => FormBuilder(
+        key: _formKey,
+        child: ButtonTheme(
+          height: 56,
+          minWidth: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: ScrollColumnExpandable(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
                   child: Text(
-                    "Or, login with",
+                    "Login",
                     style: Theme.of(context)
                         .textTheme
-                        .caption
-                      .copyWith(fontSize: 16, fontWeight: FontWeight.w600)
-                  )
-              ),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Image.asset(
-                      Assets.google,
-                      height: 36,
+                        .headline4
+                        .copyWith(
+                        color: Theme.of(context).textTheme.bodyText1.color,
+                        fontWeight: FontWeight.w600
                     ),
-                    onPressed: () {},
                   ),
-                  SizedBox(width: 48),
-                  IconButton(
-                    icon: Image.asset(
-                        Assets.facebook,
-                        height: 36
+                ),
+                FormBuilderTextField(
+                  attribute: "email",
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 0.5,
+                      ),
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    onPressed: () {},
+                    labelText: "Email",
                   ),
-                ],
-              ),
-              SizedBox(height: 24),
-              Spacer(),
-              FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)
+                  validators: [
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.email()
+                  ],
                 ),
-                color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).backgroundColor,
-                onPressed: widget.loginStore.loading ?
-                    null :
-                    _login,
-                child: Text(
-                    widget.loginStore.loading ?
-                        "Loading" :
-                        "Login"
+                SizedBox(height: 24),
+                FormBuilderTextField(
+                  attribute: "password",
+                  maxLines: 1,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                    focusColor: Theme.of(context).primaryColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    labelText: "Password",
+                    suffixIcon: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                          _isPasswordTextObscure ?
+                          Icons.visibility :
+                          Icons.visibility_off
+                      ),
+                      onPressed: _togglePasswordObscureText,
+                    ),
+                  ),
+                  obscureText: _isPasswordTextObscure,
+                  validators: [
+                    FormBuilderValidators.required()
+                  ],
                 ),
-              ),
-            ],
+                SizedBox(height: 24),
+                if (widget.loginStore.error != null)
+                  ...[
+                    Center(
+                      child: Text(
+                        widget.loginStore.error.message,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            .copyWith(
+                              color: Theme.of(context).errorColor,
+                              fontSize: 16
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                  ],
+                Center(
+                    child: Text(
+                      "Or, login with",
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w600)
+                    )
+                ),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        Assets.google,
+                        height: 36,
+                      ),
+                      onPressed: () {},
+                    ),
+                    SizedBox(width: 48),
+                    IconButton(
+                      icon: Image.asset(
+                          Assets.facebook,
+                          height: 36
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Spacer(),
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24)
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Theme.of(context).backgroundColor,
+                  onPressed: widget.loginStore.loading ?
+                  null :
+                  _login,
+                  child: Text(
+                      widget.loginStore.loading ?
+                      "Loading" :
+                      "Login"
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      )
+        )
+    ),
   );
 
   void _login() {

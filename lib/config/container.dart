@@ -76,5 +76,8 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
   GetIt.instance.registerSingleton<NavigationStore>(navigationStore);
   GetIt.instance.registerSingleton<AuthStore>(authStore);
   GetIt.instance.registerFactory<LoginStore>(() => LoginStore(authStore: authStore));
-  GetIt.instance.registerFactory<SignUpStore>(() => SignUpStore());
+  GetIt.instance.registerFactory<SignUpStore>(() => SignUpStore(
+    apiClient: apiClient,
+    navigationStore: navigationStore
+  ));
 }

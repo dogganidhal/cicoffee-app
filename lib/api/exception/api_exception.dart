@@ -18,4 +18,15 @@ class ApiError extends Error {
     );
   }
 
+  String get message {
+    switch (errorCode) {
+      case "NOT_FOUND":
+        return "Incorrect email or password";
+      case "USER_EXISTS":
+        return "A user with this email exists already, please login instead";
+    }
+    return "Unexpected error";
+  }
 }
+
+

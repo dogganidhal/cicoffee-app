@@ -19,6 +19,7 @@ abstract class _LoginStore with Store {
 
   @action
   Future login(String email, String password) async {
+    error = null;
     loading = true;
     try {
       await authStore.login(email, password);

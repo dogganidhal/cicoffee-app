@@ -32,6 +32,11 @@ abstract class _NavigationStore with Store {
     navigatorKey.currentState.pushNamed("/sign-up");
   }
 
+  @action
+  Future popAndNavigateToLogin() async {
+    navigatorKey.currentState.popAndPushNamed("/login");
+  }
+
   void _popAll() {
     while (navigatorKey.currentState.canPop()) {
       navigatorKey.currentState.pop();
