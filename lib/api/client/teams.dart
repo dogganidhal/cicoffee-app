@@ -4,26 +4,24 @@ import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:meta/meta.dart';
 import 'package:dio/dio.dart';
 
-import '../dto/team_dto.dart';
-
 
 class TeamsApiClient extends HttpClient {
   TeamsApiClient({@required Dio dio}) : super(dio: dio);
 
   Future<TeamDto> createTeam(CreateTeamDto request) async {
-    final data = extractData(await post("/api/team", data: request));
+    final data = await post("/api/team", data: request);
     return TeamDto.fromJson(data);
   }
 
   Future<List<TeamDto>> getTeams() async {
-    final data = extractData(await get("/api/team"));
+    final data = await get("/api/team");
     return (data as List)
       .map((item) => TeamDto.fromJson(item))
       .toList();
   }
 
   Future<TeamDto> joinTeam(String teamId) async {
-    final data = extractData(await post("/api/team/$teamId/join"));
+    final data = await post("/api/team/$teamId/join");
     return TeamDto.fromJson(data);
   }
 
@@ -32,7 +30,7 @@ class TeamsApiClient extends HttpClient {
   }
 
   Future<TeamDto> addMember(String teamId, String memberId) async {
-    final data = extractData(await post("/api/team/$teamId/members/$memberId"));
+    final data = await post("/api/team/$teamId/members/$memberId");
     return TeamDto.fromJson(data);
   }
 }

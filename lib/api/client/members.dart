@@ -14,12 +14,12 @@ class MembersApiClient extends HttpClient {
   }
 
   Future<MemberDto> getMember() async {
-    final data = extractData(await get("/api/member"));
+    final data = await get("/api/member");
     return MemberDto.fromJson(data);
   }
 
   Future<MemberDto> signUp(CreateMemberDto request) async {
-    final data = extractData(await post("/api/member", data: request));
+    final data = await post("/api/member", data: request);
     return MemberDto.fromJson(data);
   }
 

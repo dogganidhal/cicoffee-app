@@ -8,7 +8,7 @@ class ProductsApiClient extends HttpClient {
   ProductsApiClient({@required Dio dio}) : super(dio: dio);
 
   Future<List<ProductDto>> getProducts() async {
-    final data = extractData(await get("/api/product"));
+    final data = await get("/api/product");
     return (data as List)
         .map((item) => ProductDto.fromJson(item))
         .toList();

@@ -1,24 +1,53 @@
+import 'package:cicoffee_app/store/login/login_store.dart';
 import 'package:cicoffee_app/theme/assets.dart';
 import 'package:cicoffee_app/widgets/scroll_column_expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 
 class Login extends StatefulWidget {
-  final VoidCallback onSignUpTapped;
-
-  const Login({Key key, this.onSignUpTapped}) : super(key: key);
+  final loginStore = GetIt.instance.get<LoginStore>();
 
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   bool _isPasswordTextObscure = true;
+  ReactionDisposer _disposer;
+
+  @override
+  void initState() {
+    super.initState();
+    _disposer = when((_) => widget.loginStore.error != null, () {
+      debugPrint("ERROR : ${widget.loginStore.error.errorCode}");
+      Scaffold
+          .of(_scaffoldKey.currentContext)
+          .showSnackBar(SnackBar(
+            duration: Duration(seconds: 10),
+            content: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("ERROR : ${widget.loginStore.error.errorCode}"),
+            ),
+          ));
+    });
+  }
+
+  @override
+  void dispose() {
+    _disposer.call();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -54,6 +83,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget _form(BuildContext context) => FormBuilder(
+      key: _formKey,
       child: ButtonTheme(
         height: 56,
         minWidth: double.infinity,
@@ -161,14 +191,31 @@ class _LoginState extends State<Login> {
                 ),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).backgroundColor,
-                onPressed: () {},
-                child: Text("Login"),
+                onPressed: widget.loginStore.loading ?
+                    null :
+                    _login,
+                child: Text(
+                    widget.loginStore.loading ?
+                        "Loading" :
+                        "Login"
+                ),
               ),
             ],
           ),
         ),
       )
   );
+
+  void _login() {
+    if (!_formKey.currentState.saveAndValidate()) {
+      return;
+    }
+    final values = _formKey.currentState.value;
+    final String email = values["email"];
+    final String password = values["password"];
+
+    widget.loginStore.login(email, password);
+  }
 
   void _togglePasswordObscureText() {
     setState(() => _isPasswordTextObscure = !_isPasswordTextObscure);

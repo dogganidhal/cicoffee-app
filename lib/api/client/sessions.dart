@@ -11,34 +11,34 @@ class SessionsApiClient extends HttpClient {
   SessionsApiClient({@required Dio dio}) : super(dio: dio);
 
   Future<SessionDto> createSession(CreateSessionDto request) async {
-    final data = extractData(await post("/api/session", data: request));
+    final data = await post("/api/session", data: request);
     return SessionDto.fromJson(data);
   }
 
   Future<List<SessionDto>> getMemberSessions() async {
-    final data = extractData(await get("/api/session"));
+    final data = await get("/api/session");
     return (data as List)
         .map((item) => SessionDto.fromJson(item))
         .toList();
   }
 
   Future<SessionDto> confirmParticipation(String sessionId) async {
-    final data = extractData(await post("/api/session/$sessionId/confirm-participation}"));
+    final data = await post("/api/session/$sessionId/confirm-participation}");
     return SessionDto.fromJson(data);
   }
 
   Future<SessionDto> retractParticipation(String sessionId) async {
-    final data = extractData(await post("/api/session/$sessionId/retract-participation"));
+    final data = await post("/api/session/$sessionId/retract-participation");
     return SessionDto.fromJson(data);
   }
 
   Future<OrderDto> order(CreateOrderDto request) async {
-    final data = extractData(await post("/api/session/order", data: request));
+    final data = await post("/api/session/order", data: request);
     return OrderDto.fromJson(data);
   }
 
   Future<List<OrderDto>> getOrders(String sessionId) async {
-    final data = extractData(await get("/api/session/order"));
+    final data = await get("/api/session/order");
     return (data as List)
         .map((item) => OrderDto.fromJson(item))
         .toList();

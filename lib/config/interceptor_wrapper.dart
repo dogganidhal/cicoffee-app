@@ -12,7 +12,11 @@ class InterceptorWrapper {
 
   Interceptor get auth => InterceptorsWrapper(
     onRequest: (options) async {
-
+      final token = await session.getCredentials();
+      if (token != null) {
+        options.headers["authorization"] = "${token.type} ${token.accessToken}";
+      }
+      return options;
     },
     onResponse: (options) async {
 

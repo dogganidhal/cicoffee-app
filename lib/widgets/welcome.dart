@@ -1,11 +1,15 @@
+import 'package:cicoffee_app/store/auth/auth_store.dart';
+import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/theme/assets.dart';
-import 'package:cicoffee_app/widgets/login.dart';
 import 'package:cicoffee_app/widgets/scroll_column_expandable.dart';
-import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 
 class Welcome extends StatelessWidget {
+  final authStore = GetIt.instance.get<AuthStore>();
+  final navigationStore = GetIt.instance.get<NavigationStore>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +35,8 @@ class Welcome extends StatelessWidget {
                           .headline4
                           .copyWith(
                           color: Theme.of(context).primaryColorDark,
-                              fontWeight: FontWeight.bold
-                          ),
+                          fontWeight: FontWeight.bold
+                      ),
                     ),
                   )
                 ],
@@ -51,7 +55,7 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               Text(
-                "Integer malesuada aliquam congue duis mattis",
+                "Integer malesuada aliquam congue duis mattis.",
                 style: Theme.of(context)
                     .textTheme
                     .button
@@ -61,10 +65,10 @@ class Welcome extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
-                  child: Image.asset(
-                      Assets.coffeeTime
-                  )
+                    padding: EdgeInsets.symmetric(vertical: 24),
+                    child: Image.asset(
+                        Assets.coffeeTime
+                    )
                 ),
               ),
               Padding(
@@ -81,9 +85,7 @@ class Welcome extends StatelessWidget {
                         ),
                         color: Theme.of(context).primaryColor.withOpacity(0.25),
                         textColor: Theme.of(context).primaryColor,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignUp()
-                        )),
+                        onPressed: navigationStore.navigateToSignUp,
                         child: Text("Sign up"),
                       ),
                       FlatButton(
@@ -92,9 +94,7 @@ class Welcome extends StatelessWidget {
                         ),
                         color: Theme.of(context).primaryColor,
                         textColor: Theme.of(context).backgroundColor,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Login()
-                        )),
+                        onPressed: navigationStore.navigateToLogin,
                         child: Text("Login"),
                       )
                     ],

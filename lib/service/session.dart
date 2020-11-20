@@ -19,7 +19,7 @@ class Session {
 
   Session({@required this.storageService});
 
-  Future<MemberDto> getUser() async {
+  Future<MemberDto> getMember() async {
     final jsonString = await storageService.getStringAsync(_kMember);
     if (jsonString == null) {
       return null;
@@ -30,12 +30,12 @@ class Session {
     return user;
   }
 
-  Future<void> setUser(MemberDto user) async {
+  Future<void> setMember(MemberDto user) async {
     await storageService.setStringAsync(_kMember, json.encode(user.toJson()));
     _cacheMap[_kMember] = user;
   }
 
-  Future<void> clearUser() async {
+  Future<void> clearMember() async {
     await storageService.removeAsync(_kMember);
     _cacheMap[_kMember] = null;
   }

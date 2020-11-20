@@ -3,11 +3,16 @@ import 'package:cicoffee_app/api/client/api_client.dart';
 import 'package:cicoffee_app/config/interceptor_wrapper.dart';
 import 'package:cicoffee_app/service/session.dart';
 import 'package:cicoffee_app/service/storage.dart';
+import 'package:cicoffee_app/store/auth/auth_store.dart';
+import 'package:cicoffee_app/store/login/login_store.dart';
+import 'package:cicoffee_app/store/navigation/navigation_store.dart';
+import 'package:cicoffee_app/store/sign_up/sign_up_store.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 
 
-void configureContainer(Environment environment) {
+void configureContainer(Environment environment, GlobalKey<NavigatorState> navigatorKey) {
   Config config;
   switch(environment) {
     case Environment.LOCAL:
@@ -22,13 +27,17 @@ void configureContainer(Environment environment) {
     case Environment.PRD:
       config = Config.prd();
       break;
+    case Environment.TEST:
+      config = Config.test();
+      break;
   }
 
-  configureSession(config);
-  configureDio(config);
+  _configureSession(config);
+  _configureDio(config);
+  _configureStores(navigatorKey);
 }
 
-void configureSession(Config config) {
+void _configureSession(Config config) {
   final storageService = StorageService();
   final session = Session(storageService: storageService);
 
@@ -36,7 +45,7 @@ void configureSession(Config config) {
   GetIt.instance.registerSingleton<Session>(session);
 }
 
-void configureDio(Config config) {
+void _configureDio(Config config) {
   Dio dio = Dio(BaseOptions(
       baseUrl: config.apiBaseUrl
   ));
@@ -53,4 +62,19 @@ void configureDio(Config config) {
 
   GetIt.instance.registerSingleton<Dio>(dio);
   GetIt.instance.registerSingleton<ApiClient>(apiClient);
+}
+
+void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
+  final session = GetIt.instance.get<Session>();
+  final apiClient = GetIt.instance.get<ApiClient>();
+  final navigationStore = NavigationStore(navigatorKey: navigatorKey);
+  final authStore = AuthStore(
+    session: session,
+    apiClient: apiClient,
+    navigationStore: navigationStore
+  );
+  GetIt.instance.registerSingleton<NavigationStore>(navigationStore);
+  GetIt.instance.registerSingleton<AuthStore>(authStore);
+  GetIt.instance.registerFactory<LoginStore>(() => LoginStore(authStore: authStore));
+  GetIt.instance.registerFactory<SignUpStore>(() => SignUpStore());
 }

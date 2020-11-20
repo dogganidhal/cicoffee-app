@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 
 class ProductDto {
   /// Returns a new [ProductDto] instance.

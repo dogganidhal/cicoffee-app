@@ -20,11 +20,16 @@ class Config {
   factory Config.prd() => Config._(
     apiBaseUrl: "http://localhost:8080"
   );
+
+  factory Config.test() => Config._(
+    apiBaseUrl: "http://localhost:8080"
+  );
 }
 
 
 enum Environment {
   LOCAL,
+  TEST,
   DEV,
   STG,
   PRD

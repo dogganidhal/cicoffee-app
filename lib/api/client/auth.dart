@@ -10,12 +10,12 @@ class AuthApiClient extends HttpClient {
   AuthApiClient({@required Dio dio}) : super(dio: dio);
 
   Future<TokenDto> login(LoginDto request) async {
-    final data = extractData(await post("/api/auth/login", data: request));
+    final data = await post("/api/auth/login", data: request);
     return TokenDto.fromJson(data);
   }
 
   Future<TokenDto> refresh(RefreshDto request) async {
-    final data = extractData(await post("/api/auth/refresh", data: request));
+    final data = await post("/api/auth/refresh", data: request);
     return TokenDto.fromJson(data);
   }
 }

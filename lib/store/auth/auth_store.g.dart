@@ -17,6 +17,21 @@ mixin _$AuthStore on _AuthStore, Store {
               name: '_AuthStore.userConnected'))
           .value;
 
+  final _$loadingAtom = Atom(name: '_AuthStore.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$memberAtom = Atom(name: '_AuthStore.member');
 
   @override
@@ -61,9 +76,17 @@ mixin _$AuthStore on _AuthStore, Store {
     return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
+  final _$logoutAsyncAction = AsyncAction('_AuthStore.logout');
+
+  @override
+  Future<dynamic> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   @override
   String toString() {
     return '''
+loading: ${loading},
 member: ${member},
 token: ${token},
 userConnected: ${userConnected}
