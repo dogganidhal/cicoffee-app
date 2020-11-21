@@ -1,4 +1,5 @@
 import 'package:cicoffee_app/api/client/api_client.dart';
+import 'package:cicoffee_app/api/dto/create_session_dto.dart';
 import 'package:cicoffee_app/api/dto/create_team_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:cicoffee_app/api/exception/api_exception.dart';
@@ -7,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:meta/meta.dart';
 
-part 'hub_store.g.dart';
+part 'team_store.g.dart';
 
-class HubStore = _HubStore with _$HubStore;
+class TeamStore = _TeamStore with _$TeamStore;
 
-abstract class _HubStore with Store {
+abstract class _TeamStore with Store {
   final ApiClient apiClient;
   final Session session;
 
-  _HubStore({@required this.apiClient, @required this.session}) {
+  _TeamStore({@required this.apiClient, @required this.session}) {
     loadTeams();
   }
 
@@ -43,6 +44,28 @@ abstract class _HubStore with Store {
       await apiClient.teams.createTeam(CreateTeamDto(name: name));
     } on ApiError catch (apiError) {
       print(apiError.errorCode);
+    }
+    loadTeams();
+  }
+
+  @action
+  Future removeTeam(TeamDto team) async {
+    loading = true;
+    try {
+      await apiClient.teams.deleteTeam(team.id);
+    } on ApiError catch (apiError) {
+      print(apiError);
+    }
+    loadTeams();
+  }
+
+  @action
+  Future leaveTeam(TeamDto team) async {
+    loading = true;
+    try {
+      await apiClient.teams.leaveTeam(team.id);
+    } on ApiError catch (apiError) {
+      print(apiError);
     }
     loadTeams();
   }

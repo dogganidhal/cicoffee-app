@@ -1,4 +1,4 @@
-import 'package:cicoffee_app/widgets/hubs.dart';
+import 'package:cicoffee_app/widgets/teams.dart';
 import 'package:cicoffee_app/widgets/sessions.dart';
 import 'package:cicoffee_app/widgets/settings.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
                   Theme.of(context).primaryColor :
                   Theme.of(context).unselectedWidgetColor,
               ),
-              label: 'Hubs'
+              label: 'My teams'
           ),
           BottomNavigationBarItem(
               icon: Icon(
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
                   Theme.of(context).primaryColor :
                   Theme.of(context).unselectedWidgetColor,
               ),
-              label: 'Pauses'
+              label: 'Sessions'
           ),
           BottomNavigationBarItem(
               icon: Icon(
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
         body: IndexedStack(
           index: _currentIndex,
           children: <Widget>[
-            Hubs(),
+            Teams(),
             Sessions(),
             Settings()
           ],

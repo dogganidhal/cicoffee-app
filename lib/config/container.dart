@@ -4,7 +4,8 @@ import 'package:cicoffee_app/config/interceptor_wrapper.dart';
 import 'package:cicoffee_app/service/session.dart';
 import 'package:cicoffee_app/service/storage.dart';
 import 'package:cicoffee_app/store/auth/auth_store.dart';
-import 'package:cicoffee_app/store/hubs/hub_store.dart';
+import 'package:cicoffee_app/store/session/session_store.dart';
+import 'package:cicoffee_app/store/team/team_store.dart';
 import 'package:cicoffee_app/store/login/login_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/store/sign_up/sign_up_store.dart';
@@ -47,17 +48,21 @@ void _configureSession(Config config) {
 }
 
 void _configureDio(Config config) {
-  Dio dio = Dio(BaseOptions(
-      baseUrl: config.apiBaseUrl
+  Dio vanillaDio = Dio(BaseOptions(
+    baseUrl: config.apiBaseUrl
   ));
-  ApiClient vanillaApiClient = ApiClient(dio: dio);
+  ApiClient vanillaApiClient = ApiClient(dio: vanillaDio);
 
   Session session = GetIt.instance.get();
   InterceptorWrapper interceptors = InterceptorWrapper(
     session: session,
     apiClient: vanillaApiClient
   );
-  dio.interceptors.add(interceptors.auth);
+
+  Dio dio = Dio(BaseOptions(
+      baseUrl: config.apiBaseUrl
+  ))
+  ..interceptors.add(interceptors.auth);
 
   ApiClient apiClient = ApiClient(dio: dio);
 
@@ -81,5 +86,6 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
     apiClient: apiClient,
     navigationStore: navigationStore
   ));
-  GetIt.instance.registerFactory<HubStore>(() => HubStore(apiClient: apiClient, session: session));
+  GetIt.instance.registerSingleton<TeamStore>(TeamStore(apiClient: apiClient, session: session));
+  GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
 }

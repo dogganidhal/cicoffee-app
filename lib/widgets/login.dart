@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 FormBuilderTextField(
-                  attribute: "email",
+                  name: "email",
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -95,14 +95,14 @@ class _LoginState extends State<Login> {
                     ),
                     labelText: "Email",
                   ),
-                  validators: [
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.email()
-                  ],
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.email(context)
+                  ])
                 ),
                 SizedBox(height: 24),
                 FormBuilderTextField(
-                  attribute: "password",
+                  name: "password",
                   maxLines: 1,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
@@ -123,9 +123,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   obscureText: _isPasswordTextObscure,
-                  validators: [
-                    FormBuilderValidators.required()
-                  ],
+                  validator: FormBuilderValidators.required(context)
                 ),
                 SizedBox(height: 24),
                 if (widget.loginStore.error != null)

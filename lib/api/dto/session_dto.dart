@@ -5,6 +5,8 @@ import 'package:cicoffee_app/api/dto/order_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
 
 class SessionDto {
+  bool currentMemberParticipating;
+
   /// Returns a new [SessionDto] instance.
   SessionDto({
     this.id,
@@ -36,24 +38,16 @@ class SessionDto {
 
 
   String id;
-
-
   DateTime startDate;
-
-
   DateTime endDate;
-
-
   TeamDto team;
-
-
   MemberDto author;
-
-
   List<OrderDto> orders;
-
-
   List<MemberDto> participants;
+
+  bool get ongoing => startDate.isBefore(DateTime.now()) && endDate.isAfter(DateTime.now());
+  bool get incoming => startDate.isAfter(DateTime.now());
+  bool get past => endDate.isBefore(DateTime.now());
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is SessionDto &&

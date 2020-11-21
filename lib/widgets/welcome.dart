@@ -83,7 +83,7 @@ class Welcome extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24)
                         ),
-                        color: Theme.of(context).primaryColor.withOpacity(0.25),
+                        color: Theme.of(context).primaryColor.withOpacity(0.15),
                         textColor: Theme.of(context).primaryColor,
                         onPressed: navigationStore.navigateToSignUp,
                         child: Text("Sign up"),

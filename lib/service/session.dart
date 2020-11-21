@@ -9,12 +9,14 @@ import 'package:cicoffee_app/api/dto/token_dto.dart';
 class Session {
   static final String _kMember = "com.softkall.cicoffee.user";
   static final String _kToken = "com.softkall.cicoffee.credentials";
+  static final String _kTokenExpiresAt = "com.softkall.cicoffee.credentials-expire-at";
 
   final StorageService storageService;
 
   final Map<String, dynamic> _cacheMap = {
     _kMember: null,
-    _kToken: null
+    _kToken: null,
+    _kTokenExpiresAt: null
   };
 
   Session({@required this.storageService});
@@ -42,6 +44,13 @@ class Session {
 
   Future<void> persistCredentials(TokenDto credentials) async {
     await storageService.setStringAsync(_kToken, json.encode(credentials.toJson()));
+    final expiresAt = DateTime.now().add(Duration(seconds: credentials.expiresIn));
+    await storageService.setStringAsync(_kTokenExpiresAt, expiresAt.toIso8601String());
+  }
+
+  Future<DateTime> getCredentialsExpirationDate() async {
+    String expiresAt = await storageService.getStringAsync(_kTokenExpiresAt);
+    return DateTime.parse(expiresAt);
   }
 
   Future<TokenDto> getCredentials() async {

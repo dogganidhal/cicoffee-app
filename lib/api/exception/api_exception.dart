@@ -1,6 +1,5 @@
-
-
 import 'package:dio/dio.dart';
+
 
 class ApiError extends Error {
   final String status;
@@ -27,6 +26,9 @@ class ApiError extends Error {
     }
     return "Unexpected error";
   }
+
+  @override
+  String toString() => "[status=$status, errorCode=$errorCode]";
 }
 
 

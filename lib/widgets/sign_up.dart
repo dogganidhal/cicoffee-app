@@ -85,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Flexible(
                       child: FormBuilderTextField(
-                        attribute: "firstName",
+                        name: "firstName",
                         keyboardType: TextInputType.text,
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
@@ -99,15 +99,13 @@ class _SignUpState extends State<SignUp> {
                           ),
                           labelText: "First name",
                         ),
-                        validators: [
-                          FormBuilderValidators.required()
-                        ],
+                        validator: FormBuilderValidators.required(context)
                       ),
                     ),
                     SizedBox(width: 24),
                     Flexible(
                       child: FormBuilderTextField(
-                        attribute: "lastName",
+                        name: "lastName",
                         keyboardType: TextInputType.text,
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
@@ -121,16 +119,14 @@ class _SignUpState extends State<SignUp> {
                           ),
                           labelText: "Last name",
                         ),
-                        validators: [
-                          FormBuilderValidators.required()
-                        ],
+                        validator: FormBuilderValidators.required(context)
                       ),
                     )
                   ],
                 ),
                 SizedBox(height: 24),
                 FormBuilderTextField(
-                  attribute: "email",
+                  name: "email",
                   keyboardType: TextInputType.emailAddress,
                   textCapitalization: TextCapitalization.none,
                   decoration: InputDecoration(
@@ -144,14 +140,14 @@ class _SignUpState extends State<SignUp> {
                     ),
                     labelText: "Email",
                   ),
-                  validators: [
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.email()
-                  ],
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.email(context)
+                  ]),
                 ),
                 SizedBox(height: 24),
                 FormBuilderTextField(
-                  attribute: "password",
+                  name: "password",
                   maxLines: 1,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
@@ -172,9 +168,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   obscureText: _isPasswordTextObscure,
-                  validators: [
-                    FormBuilderValidators.required()
-                  ],
+                  validator: FormBuilderValidators.required(context)
                 ),
                 SizedBox(height: 24),
                 if (widget.signUpStore.error != null)

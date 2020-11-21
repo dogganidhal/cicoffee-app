@@ -20,6 +20,7 @@ class CICoffeeApp extends StatelessWidget {
       theme: ThemeData(
         primaryColorDark: primaryColor,
         primaryColor: primaryColor,
+        accentColor: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'ProductSans',
         cursorColor: primaryColor,

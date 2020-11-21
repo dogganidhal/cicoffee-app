@@ -1,6 +1,6 @@
-import 'package:cicoffee_app/store/hubs/hub_store.dart';
+import 'dart:ui';
+import 'package:cicoffee_app/store/team/team_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
-import 'package:cicoffee_app/theme/assets.dart';
 import 'package:cicoffee_app/widgets/team_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -9,56 +9,53 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get_it/get_it.dart';
 
 
-class Hubs extends StatefulWidget {
-  final HubStore hubStore = GetIt.instance.get<HubStore>();
+class Teams extends StatefulWidget {
+  final TeamStore teamStore = GetIt.instance.get<TeamStore>();
   final NavigationStore navigationStore = GetIt.instance.get<NavigationStore>();
 
   @override
-  _HubsState createState() => _HubsState();
+  _TeamsState createState() => _TeamsState();
 }
 
-class _HubsState extends State<Hubs> {
+class _TeamsState extends State<Teams> {
   final GlobalKey<FormBuilderState> _addTeamFormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 32,
-              child: Image.asset(Assets.logo),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Pausa Café",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5
-                    .copyWith(
-                    color: Theme.of(context).primaryColorDark,
-                    fontWeight: FontWeight.bold
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            centerTitle: false,
+            expandedHeight: 72,
+            elevation: 0,
+            forceElevated: false,
+            title: Text(
+              "My Teams",
+              style: Theme.of(context)
+                .textTheme
+                .headline3
+                .copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).primaryColor
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-      body: Observer(
-        builder: (context) => widget.hubStore.loading ?
-            _loader :
-            widget.hubStore.teams.isEmpty ?
-                _emptyPlaceholder :
-                _teams
+            ),
+          ),
+          Observer(
+              builder: (context) => widget.teamStore.loading ?
+              _loader :
+              widget.teamStore.teams.isEmpty ?
+              _emptyPlaceholder :
+              _teams
+          )
+        ],
       ),
       floatingActionButton: SpeedDial(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).primaryColor,
+        overlayColor: Theme.of(context).shadowColor,
+        overlayOpacity: 0.4,
         children: [
           SpeedDialChild(
               child: Icon(Icons.create),
@@ -69,7 +66,8 @@ class _HubsState extends State<Hubs> {
                   "Create team".toUpperCase(),
                   style: TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w600
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).backgroundColor
                   ),
                 ),
               ),
@@ -84,7 +82,8 @@ class _HubsState extends State<Hubs> {
                 "Join team".toUpperCase(),
                 style: TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w600
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).backgroundColor
                 ),
               ),
             ),
@@ -95,40 +94,52 @@ class _HubsState extends State<Hubs> {
     );
   }
 
-  Widget get _teams => ListView.separated(
-    padding: EdgeInsets.all(12),
-    itemBuilder: (context, index) => TeamCard(team: widget.hubStore.teams[index]),
-    separatorBuilder: (context, index) => SizedBox(height: 12),
-    itemCount: widget.hubStore.teams.length
-  );
-
-  Widget get _loader => Center(
-    child: CircularProgressIndicator(),
-  );
-
-  Widget get _emptyPlaceholder => Center(
-    child: Padding(
-      padding: EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "No hubs!",
-            style: Theme.of(context).textTheme.headline6,
+  Widget get _teams => SliverPadding(
+    padding: EdgeInsets.only(top: 12, left: 12, right: 12),
+    sliver: SliverList(
+      delegate: SliverChildBuilderDelegate(
+            (context, index) => Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: TeamCard(
+            team: widget.teamStore.teams[index]
           ),
-          SizedBox(height: 8),
-          Text(
-            "You're not yet a member of any hub, try to add or join a team",
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .caption
-                .copyWith(
-                color: Theme.of(context).unselectedWidgetColor,
-                fontSize: 14
+        ),
+        childCount: widget.teamStore.teams.length,
+      ),
+    ),
+  );
+
+  Widget get _loader => SliverFillRemaining(
+    child: Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
+
+  Widget get _emptyPlaceholder => SliverFillRemaining(
+    child: Center(
+      child: Padding(
+        padding: EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "No hubs!",
+              style: Theme.of(context).textTheme.headline6,
             ),
-          )
-        ],
+            SizedBox(height: 8),
+            Text(
+              "You're not yet a member of any hub, try to add or join a team",
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  .copyWith(
+                      color: Theme.of(context).unselectedWidgetColor,
+                      fontSize: 14
+                  ),
+            )
+          ],
+        ),
       ),
     ),
   );
@@ -161,7 +172,7 @@ class _HubsState extends State<Hubs> {
               children: [
                 SizedBox(height: 12),
                 FormBuilderTextField(
-                  attribute: "teamName",
+                  name: "teamName",
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -174,9 +185,7 @@ class _HubsState extends State<Hubs> {
                     ),
                     labelText: "Team name",
                   ),
-                  validators: [
-                    FormBuilderValidators.required()
-                  ],
+                  validator: FormBuilderValidators.required(context)
                 ),
                 SizedBox(height: 24),
                 Row(
@@ -188,7 +197,7 @@ class _HubsState extends State<Hubs> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24)
                           ),
-                          color: Theme.of(context).primaryColor.withOpacity(0.25),
+                          color: Theme.of(context).primaryColor.withOpacity(0.15),
                           textColor: Theme.of(context).primaryColor,
                           onPressed: widget.navigationStore.pop,
                           child: Text("Cancel"),
@@ -213,7 +222,7 @@ class _HubsState extends State<Hubs> {
                             final String teamName = values["teamName"];
 
                             widget.navigationStore.pop();
-                            widget.hubStore.addTeam(teamName);
+                            widget.teamStore.addTeam(teamName);
                           },
                           child: Text("Create"),
                         ),

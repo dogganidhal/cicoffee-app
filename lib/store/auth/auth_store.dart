@@ -35,7 +35,6 @@ abstract class _AuthStore with Store {
 
   @action
   Future loadFromDisk() async {
-    await Future.delayed(Duration(seconds: 3));
     token = await session.getCredentials();
     member = await session.getMember();
     loading = false;

@@ -29,6 +29,10 @@ class TeamsApiClient extends HttpClient {
     await post("/api/team/$teamId/leave");
   }
 
+  Future deleteTeam(String teamId) async {
+    await delete("/api/team/$teamId");
+  }
+
   Future<TeamDto> addMember(String teamId, String memberId) async {
     final data = await post("/api/team/$teamId/members/$memberId");
     return TeamDto.fromJson(data);

@@ -50,6 +50,13 @@ mixin _$NavigationStore on _NavigationStore, Store {
         .run(() => super.popAndNavigateToLogin());
   }
 
+  final _$popAsyncAction = AsyncAction('_NavigationStore.pop');
+
+  @override
+  Future<dynamic> pop() {
+    return _$popAsyncAction.run(() => super.pop());
+  }
+
   @override
   String toString() {
     return '''
