@@ -23,33 +23,43 @@ class _TeamsState extends State<Teams> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            centerTitle: false,
-            expandedHeight: 72,
-            elevation: 0,
-            forceElevated: false,
-            title: Text(
-              "My Teams",
-              style: Theme.of(context)
-                .textTheme
-                .headline3
-                .copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).primaryColor
-                ),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              floating: true,
+              centerTitle: false,
+              elevation: 0,
+              forceElevated: false,
+              bottom: PreferredSize(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Text(
+                        "My Teams",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                    ),
+                  ),
+                  preferredSize: Size(0, 72)
+              ),
             ),
-          ),
-          Observer(
-              builder: (context) => widget.teamStore.loading ?
-              _loader :
-              widget.teamStore.teams.isEmpty ?
-              _emptyPlaceholder :
-              _teams
-          )
-        ],
+            Observer(
+                builder: (context) => widget.teamStore.loading ?
+                _loader :
+                widget.teamStore.teams.isEmpty ?
+                _emptyPlaceholder :
+                _teams
+            )
+          ],
+        ),
       ),
       floatingActionButton: SpeedDial(
         child: Icon(Icons.add),

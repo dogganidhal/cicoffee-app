@@ -1,11 +1,11 @@
 import 'package:cicoffee_app/api/dto/session_dto.dart';
 import 'package:cicoffee_app/store/session/session_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
+import 'package:cicoffee_app/widgets/session_participation_state.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 
 
 class SessionCard extends StatelessWidget {
@@ -40,33 +40,39 @@ class SessionCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        session.team.name.toUpperCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          session.team.name.toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 4),
-                      _participants(context),
-                      SizedBox(height: 4),
-                      _startDateWidget(context),
-                      SizedBox(height: 4),
-                      _duration(context),
-                    ],
+                        SizedBox(height: 4),
+                        _participants(context),
+                        SizedBox(height: 4),
+                        _startDateWidget(context),
+                        SizedBox(height: 4),
+                        _duration(context),
+                      ],
+                    ),
                   ),
-                  Spacer(),
-
+                  Column(
+                    children: [
+                      SessionParticipationState(session: session),
+                    ],
+                  )
                 ],
               ),
             ),
-            if (session.ongoing || session.incoming)
+            if ((session.ongoing || session.incoming) && !session.currentMemberParticipating)
               ...[
                 SizedBox(height: 12),
                 Container(
@@ -80,7 +86,7 @@ class SessionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16)
                           ),
                           textColor: Theme.of(context).unselectedWidgetColor,
-                          onPressed: () {},
+                          onPressed: () => sessionStore.muteSession(session),
                           icon: Icon(Icons.history),
                           label: Text("Maybe later".toUpperCase()),
                         ),
@@ -97,7 +103,39 @@ class SessionCard extends StatelessWidget {
                     ),
                   ),
                 )
-              ]
+              ],
+            if ((session.ongoing || session.incoming) && session.currentMemberParticipating)
+              ...[
+                SizedBox(height: 12),
+                Container(
+                  child: ButtonTheme(
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FlatButton.icon(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)
+                          ),
+                          textColor: Theme.of(context).errorColor,
+                          onPressed: () {},
+                          icon: Icon(Icons.close),
+                          label: Text("Retract".toUpperCase()),
+                        ),
+                        FlatButton.icon(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)
+                          ),
+                          textColor: Theme.of(context).primaryColor,
+                          onPressed: () {},
+                          icon: Icon(Icons.arrow_forward_rounded),
+                          label: Text("Show".toUpperCase()),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
           ],
         ),
       ),
@@ -116,7 +154,11 @@ class SessionCard extends StatelessWidget {
           ),
       children: [
         TextSpan(
-          text: printDuration(session.endDate.difference(session.startDate)),
+          text: prettyDuration(
+            session.endDate.difference(session.startDate),
+            tersity: DurationTersity.minute,
+            abbreviated: true
+          ),
           style: Theme.of(context)
               .textTheme
               .caption
@@ -185,7 +227,11 @@ class SessionCard extends StatelessWidget {
           style: textStyle,
           children: [
             TextSpan(
-              text: printDuration(session.startDate.difference(now), tersity: DurationTersity.minute),
+              text: prettyDuration(
+                session.startDate.difference(now),
+                tersity: DurationTersity.minute,
+                abbreviated: true
+              ),
               style: valueStyle
             )
           ]
@@ -199,7 +245,11 @@ class SessionCard extends StatelessWidget {
             style: textStyle,
             children: [
               TextSpan(
-                text: printDuration(now.difference(session.startDate), tersity: DurationTersity.minute),
+                text: prettyDuration(
+                  now.difference(session.startDate),
+                  tersity: DurationTersity.minute,
+                  abbreviated: true
+                ),
                 style: valueStyle,
                 children: [
                   TextSpan(
@@ -218,7 +268,11 @@ class SessionCard extends StatelessWidget {
           style: textStyle,
           children: [
             TextSpan(
-              text: printDuration(now.difference(session.endDate), tersity: DurationTersity.minute),
+              text: prettyDuration(
+                now.difference(session.endDate),
+                tersity: DurationTersity.minute,
+                abbreviated: true
+              ),
               style: valueStyle,
               children: [
                 TextSpan(

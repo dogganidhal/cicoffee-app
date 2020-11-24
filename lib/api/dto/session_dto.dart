@@ -6,6 +6,7 @@ import 'package:cicoffee_app/api/dto/team_dto.dart';
 
 class SessionDto {
   bool currentMemberParticipating;
+  bool currentMemberCreator;
 
   /// Returns a new [SessionDto] instance.
   SessionDto({

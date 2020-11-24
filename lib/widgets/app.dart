@@ -3,6 +3,7 @@ import 'package:cicoffee_app/config/router.dart';
 import 'package:cicoffee_app/widgets/app_configurer.dart';
 import 'package:cicoffee_app/widgets/auth_loader.dart';
 import 'package:flutter/material.dart' hide Router;
+import 'package:flutter/services.dart';
 
 
 class CICoffeeApp extends StatelessWidget {
@@ -14,6 +15,9 @@ class CICoffeeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Color(0xff1A2384);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent
+    ));
     return MaterialApp(
       title: 'CiCoffee',
       navigatorKey: _navigatorKey,

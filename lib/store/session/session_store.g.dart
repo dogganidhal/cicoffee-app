@@ -61,6 +61,21 @@ mixin _$SessionStore on _SessionStore, Store {
     });
   }
 
+  final _$mutedSessionsAtom = Atom(name: '_SessionStore.mutedSessions');
+
+  @override
+  List<String> get mutedSessions {
+    _$mutedSessionsAtom.reportRead();
+    return super.mutedSessions;
+  }
+
+  @override
+  set mutedSessions(List<String> value) {
+    _$mutedSessionsAtom.reportWrite(value, super.mutedSessions, () {
+      super.mutedSessions = value;
+    });
+  }
+
   final _$loadSessionsAsyncAction = AsyncAction('_SessionStore.loadSessions');
 
   @override
@@ -77,11 +92,26 @@ mixin _$SessionStore on _SessionStore, Store {
         .run(() => super.createSession(team, startDate, endDate));
   }
 
+  final _$muteSessionAsyncAction = AsyncAction('_SessionStore.muteSession');
+
+  @override
+  Future<dynamic> muteSession(SessionDto session) {
+    return _$muteSessionAsyncAction.run(() => super.muteSession(session));
+  }
+
+  final _$confirmAsyncAction = AsyncAction('_SessionStore.confirm');
+
+  @override
+  Future<dynamic> confirm(SessionDto session) {
+    return _$confirmAsyncAction.run(() => super.confirm(session));
+  }
+
   @override
   String toString() {
     return '''
 loading: ${loading},
 sessions: ${sessions},
+mutedSessions: ${mutedSessions},
 incomingSessions: ${incomingSessions},
 ongoingSessions: ${ongoingSessions},
 pastSessions: ${pastSessions}

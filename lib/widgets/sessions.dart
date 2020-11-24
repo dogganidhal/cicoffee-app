@@ -19,33 +19,43 @@ class _SessionsState extends State<Sessions> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
-        builder: (context) => CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              floating: true,
-              centerTitle: false,
-              expandedHeight: 72,
-              elevation: 0,
-              forceElevated: false,
-              title: Text(
-                "My Sessions",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3
-                    .copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor
+        builder: (context) => SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                centerTitle: false,
+                elevation: 0,
+                forceElevated: false,
+                bottom: PreferredSize(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Text(
+                        "My Sessions",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                    ),
+                  ),
+                  preferredSize: Size(0, 72)
                 ),
               ),
-            ),
-            ...(
-                sessionStore.loading ?
-                [_loader] :
-                sessionStore.sessions.isEmpty ?
-                [_emptyPlaceholder] :
-                _sessions
-            )
-          ],
+              ...(
+                  sessionStore.loading ?
+                  [_loader] :
+                  sessionStore.sessions.isEmpty ?
+                  [_emptyPlaceholder] :
+                  _sessions
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -97,7 +107,7 @@ class _SessionsState extends State<Sessions> {
       ),
     if (sessionStore.pastSessions.length > 0)
       SliverStickyHeader(
-        header: _sectionStickyHeader("Past"),
+        header: _sectionStickyHeader("Earlier this day"),
         sliver: _sliverList(sessionStore.pastSessions)
       )
   ];

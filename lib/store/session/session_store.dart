@@ -21,6 +21,9 @@ abstract class _SessionStore with Store {
   @observable
   List<SessionDto> sessions;
 
+  @observable
+  List<String> mutedSessions = List.empty(growable: true);
+
   @computed
   List<SessionDto> get incomingSessions => sessions
       .where((session) => session.incoming)
@@ -46,13 +49,15 @@ abstract class _SessionStore with Store {
     try {
       final member = await session.getMember();
       sessions = await apiClient.sessions.getMemberSessions();
+      sessions = sessions
+        .where((element) => !mutedSessions.contains(element.id))
+        .toList();
       sessions.forEach((session) {
         final membersWithIdCount = session.participants
             .where((element) => element.id == member.id)
             .length;
-        if (membersWithIdCount > 0) {
-          session.currentMemberParticipating = true;
-        }
+        session.currentMemberParticipating = membersWithIdCount > 0;
+        session.currentMemberCreator = session.author.id == member.id;
       });
     } on ApiError catch (apiError) {
       print(apiError);
@@ -62,6 +67,7 @@ abstract class _SessionStore with Store {
 
   @action
   Future createSession(TeamDto team, DateTime startDate, DateTime endDate) async {
+    loading = true;
     try {
       await apiClient.sessions.createSession(CreateSessionDto(
           teamId: team.id,
@@ -71,6 +77,23 @@ abstract class _SessionStore with Store {
     } on ApiError catch (apiError) {
       print(apiError);
     }
+    loadSessions();
+  }
+
+  @action
+  Future muteSession(SessionDto session) async {
+    loading = true;
+    mutedSessions.add(session.id);
+    sessions = sessions
+      .where((element) => element.id != session.id)
+      .toList();
+    loading = false;
+  }
+
+  @action
+  Future confirm(SessionDto session) async {
+    loading = true;
+    await apiClient.sessions.confirmParticipation(session.id);
     loadSessions();
   }
 }
