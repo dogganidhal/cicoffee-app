@@ -97,7 +97,7 @@ class _TeamCardState extends State<TeamCard> {
                           borderRadius: BorderRadius.circular(16)
                       ),
                       textColor: Theme.of(context).primaryColor,
-                      onPressed: () {},
+                      onPressed: () => _inviteToSession(context),
                       icon: Icon(Icons.mail),
                       label: Text("Invite".toUpperCase()),
                     ),
@@ -394,4 +394,71 @@ class _TeamCardState extends State<TeamCard> {
       ),
     );
   }
+  void _inviteToSession(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))
+        ),
+        builder: (ctx) {
+          return IntrinsicHeight(
+            child: Container(
+            padding: EdgeInsets.all(16),
+            child:
+             Column(
+               crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+              Center(
+                child: Text(
+                  "Invite with".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).unselectedWidgetColor
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+              Container(
+                child:
+                  ButtonTheme(
+                  height: 56,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)
+                    ),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).backgroundColor,
+                    onPressed: (){},
+                    child: Text("Email".toUpperCase()),
+                  ),
+                ),
+              ),
+                SizedBox(height: 16),
+              Container(
+                child:
+                  ButtonTheme(
+                height: 56,
+                padding: EdgeInsets.all(16),
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24)
+                  ),
+                  color: Theme.of(context).primaryColor.withOpacity(0.15),
+                  textColor: Theme.of(context).primaryColor,
+                  onPressed: (){},
+                  child: Text("QR Code".toUpperCase()),
+                ),
+              ),
+              ),
+
+            ],
+             ),
+            ),
+          );
+        });
+  }
+
 }
