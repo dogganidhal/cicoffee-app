@@ -26,4 +26,10 @@ class MembersApiClient extends HttpClient {
   Future unregisterDevice(String identifier) async {
     await get("/api/member/device/$identifier");
   }
+
+  Future<List<MemberDto>> searchMembers(String query) async {
+    final data = await get("/api/member/search?query=$query");
+    return MemberDto.listFromJson(data);
+  }
+
 }

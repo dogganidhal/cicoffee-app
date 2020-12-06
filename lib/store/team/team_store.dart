@@ -1,5 +1,4 @@
 import 'package:cicoffee_app/api/client/api_client.dart';
-import 'package:cicoffee_app/api/dto/create_session_dto.dart';
 import 'package:cicoffee_app/api/dto/create_team_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:cicoffee_app/api/exception/api_exception.dart';
@@ -69,4 +68,5 @@ abstract class _TeamStore with Store {
     }
     loadTeams();
   }
+
 }
