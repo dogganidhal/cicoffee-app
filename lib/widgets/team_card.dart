@@ -2,13 +2,12 @@ import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/store/session/session_store.dart';
 import 'package:cicoffee_app/store/team/team_store.dart';
-import 'package:cicoffee_app/store/invitation/invitation_store.dart';
+import 'package:cicoffee_app/store/invitation/email_invitation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:cicoffee_app/api/dto/member_dto.dart';
+import 'package:cicoffee_app/widgets/email_invitation_form.dart';
 
 class TeamCard extends StatefulWidget {
   final TeamDto team;
@@ -25,7 +24,7 @@ class _TeamCardState extends State<TeamCard> {
   final NavigationStore navigationStore = GetIt.instance.get<NavigationStore>();
   final TeamStore teamStore = GetIt.instance.get<TeamStore>();
   final SessionStore sessionStore = GetIt.instance.get<SessionStore>();
-  final InvitationStore invitationStore = GetIt.instance.get<InvitationStore>();
+  final EmailInvitationStore invitationEmail = GetIt.instance.get<EmailInvitationStore>();
 
   final GlobalKey<FormBuilderState> _createSessionFormKey = GlobalKey();
 
@@ -398,6 +397,7 @@ class _TeamCardState extends State<TeamCard> {
       ),
     );
   }
+
   void _inviteToSession(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -468,6 +468,7 @@ class _TeamCardState extends State<TeamCard> {
           );
         });
   }
+
   void _emailInvite(BuildContext context) {
     showDialog(
       context: context,
@@ -486,84 +487,7 @@ class _TeamCardState extends State<TeamCard> {
             ),
           ),
         ),
-        content: FormBuilder(
-          key: _createSessionFormKey,
-          initialValue: {
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 24),
-              ChipsInput<MemberDto>(
-                initialValue: [],
-                decoration: InputDecoration(
-                  labelText: "Invite colleagues",
-                ),
-                maxChips: 3,
-                findSuggestions: (String query) {
-                  if (query.length > 2) {
-                    return invitationStore.searchMembers(query);
-                  } else {
-                    return [];
-                  }
-                },
-                onChanged: (data) {
-                  print(data);
-                },
-                chipBuilder: (context, state, member) {
-                  return InputChip(
-                    key: ObjectKey(member),
-                    label: Text(member.email),
-                    onDeleted: () => state.deleteChip(member),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  );
-                },
-                suggestionBuilder: (context, state, member) {
-                  return ListTile(
-                    key: ObjectKey(member),
-                    title: Text("${member.firstName} ${member.lastName}"),
-                    subtitle: Text(member.email),
-                    onTap: () => state.selectSuggestion(member),
-                  );
-                },
-              ),
-              SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ButtonTheme(
-                      height: 56,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)
-                        ),
-                        color: Theme.of(context).primaryColor.withOpacity(0.15),
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: navigationStore.pop,
-                        child: Text("Cancel".toUpperCase()),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 24),
-                  Expanded(
-                    child: ButtonTheme(
-                      height: 56,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        textColor: Theme.of(context).backgroundColor,
-                        onPressed: () {},
-                        child: Text("Invite".toUpperCase()),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
+        content: EmailInvitationForm(),
       ),
     );
   }

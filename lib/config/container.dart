@@ -9,7 +9,7 @@ import 'package:cicoffee_app/store/team/team_store.dart';
 import 'package:cicoffee_app/store/login/login_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/store/sign_up/sign_up_store.dart';
-import 'package:cicoffee_app/store/invitation/invitation_store.dart';
+import 'package:cicoffee_app/store/invitation/email_invitation.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -89,5 +89,5 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
   ));
   GetIt.instance.registerSingleton<TeamStore>(TeamStore(apiClient: apiClient, session: session));
   GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
-  GetIt.instance.registerSingleton<InvitationStore>(InvitationStore(apiClient: apiClient));
+  GetIt.instance.registerSingleton<EmailInvitationStore>(EmailInvitationStore(apiClient: apiClient));
 }
