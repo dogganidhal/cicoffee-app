@@ -38,6 +38,11 @@ abstract class _NavigationStore with Store {
   }
 
   @action
+  Future navigateToInvitationQR() async {
+    navigatorKey.currentState.pushNamed("/invitation-qr");
+  }
+
+  @action
   Future pop() async {
     navigatorKey.currentState.pop();
   }

@@ -8,6 +8,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:cicoffee_app/widgets/email_invitation_form.dart';
+import 'package:cicoffee_app/widgets/invitation_qrcode_generator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class TeamCard extends StatefulWidget {
@@ -456,7 +457,8 @@ class _TeamCardState extends State<TeamCard> {
                   color: Theme.of(context).primaryColor.withOpacity(0.15),
                   textColor: Theme.of(context).primaryColor,
                   onPressed: () {
-                    _codeQRInvite(context);
+                    Navigator.pushNamed(context, '/invitation-qr/${widget.team.id}');
+                    //_codeQRInvite(context);
                   },
                   child: Text("QR Code".toUpperCase()),
                 ),
@@ -490,37 +492,6 @@ class _TeamCardState extends State<TeamCard> {
         ),
         content: EmailInvitationForm(),
       ),
-    );
-  }
-
-  void _codeQRInvite(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24)
-        ),
-        title: Center(
-          child: Text(
-            "Scan QR Code".toUpperCase(),
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(
-                fontWeight: FontWeight.w600
-            ),
-          ),
-        ),
-        content:  Container(
-            width: 30,
-            child:
-            QrImage(
-              data: widget.team.id,
-              gapless: true,
-              foregroundColor:
-              Theme.of(context).primaryColor,),
-        ),
-    ),
     );
   }
 

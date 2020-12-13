@@ -25,7 +25,7 @@ dependencies:
   flutter_sticky_header: ^0.5.0
   flutter_chips_input: ^1.9.4
   qr_flutter: ^3.1.0
-  qr_code_scanner : 0.0.14
+  qrscan: ^0.2.21
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +41,7 @@ flutter:
     - assets/coffee-time.png
     - assets/facebook.png
     - assets/google.png
+    - assets/qrcode.png
   fonts:
     - family: ProductSans
       fonts:

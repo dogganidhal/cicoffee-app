@@ -50,6 +50,15 @@ mixin _$NavigationStore on _NavigationStore, Store {
         .run(() => super.popAndNavigateToLogin());
   }
 
+  final _$navigateToInvitationQRAsyncAction =
+      AsyncAction('_NavigationStore.navigateToInvitationQR');
+
+  @override
+  Future<dynamic> navigateToInvitationQR() {
+    return _$navigateToInvitationQRAsyncAction
+        .run(() => super.navigateToInvitationQR());
+  }
+
   final _$popAsyncAction = AsyncAction('_NavigationStore.pop');
 
   @override

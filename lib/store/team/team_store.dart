@@ -68,5 +68,14 @@ abstract class _TeamStore with Store {
     }
     loadTeams();
   }
-
+  @action
+  Future joinTeam(String teamId) async {
+    loading = true;
+    try {
+      await apiClient.teams.joinTeam(teamId);
+    } on ApiError catch (apiError) {
+      print(apiError);
+    }
+    loadTeams();
+  }
 }

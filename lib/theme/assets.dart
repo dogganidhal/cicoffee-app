@@ -5,4 +5,5 @@ abstract class Assets {
   static String coffeeTime = "assets/coffee-time.png";
   static String google = "assets/google.png";
   static String facebook = "assets/facebook.png";
+  static String qrCode = "assets/qrcode.png";
 }

@@ -7,7 +7,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 
 class Teams extends StatefulWidget {
@@ -23,7 +22,6 @@ class _TeamsState extends State<Teams> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   var qrText = "";
-  QRViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +100,9 @@ class _TeamsState extends State<Teams> {
                 ),
               ),
             ),
-            onTap: _joinTeam,
+            onTap: () {
+              Navigator.pushNamed(context, '/join-qr');
+            }
           ),
         ],
       ),
@@ -250,59 +250,6 @@ class _TeamsState extends State<Teams> {
           ),
         ),
       )
-    );
-  }
-
-  void _joinTeam() {
-    showDialog(
-        context: context,
-        builder: (context) => ButtonTheme(
-          height: 56,
-          minWidth: double.infinity,
-          child: AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24)
-            ),
-            title: Center(
-              child: Text(
-                "QR Code".toUpperCase(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(
-                    fontWeight: FontWeight.w600
-                ),
-              ),
-            ),
-            content:  Scaffold(
-             body: Column(
-              children: [
-                  Expanded(
-                  flex: 5,
-                  child: QRView(
-                    key: qrKey,
-                    onQRViewCreated: (_) {
-                      controller.scannedDataStream.listen((scanData) {
-                        setState(() {
-                          qrText = scanData;
-                        });
-                      });
-                    },
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Text('Scan result: $qrText'),
-                  ),
-                )
-              ],
-              ),
-            ),
-
-            ),
-          ),
-
     );
   }
 }

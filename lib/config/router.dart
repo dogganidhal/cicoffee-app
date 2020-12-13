@@ -11,10 +11,12 @@ abstract class Router {
   static final String signUp = "/sign-up";
   static final String home = "/home";
 
+
   static final Map<String, WidgetBuilder> routeBindings = {
     welcome: (context) => Welcome(),
     login: (context) => Login(),
     signUp: (context) => SignUp(),
-    home: (context) => Home()
+    home: (context) => Home(),
+
   };
 }
