@@ -24,6 +24,14 @@ mixin _$EmailInvitationStore on _EmailInvitationStore, Store {
     });
   }
 
+  final _$sendInvitationsAsyncAction =
+      AsyncAction('_EmailInvitationStore.sendInvitations');
+
+  @override
+  Future<dynamic> sendInvitations(String team) {
+    return _$sendInvitationsAsyncAction.run(() => super.sendInvitations(team));
+  }
+
   final _$_EmailInvitationStoreActionController =
       ActionController(name: '_EmailInvitationStore');
 
@@ -55,17 +63,6 @@ mixin _$EmailInvitationStore on _EmailInvitationStore, Store {
         name: '_EmailInvitationStore.removeAll');
     try {
       return super.removeAll();
-    } finally {
-      _$_EmailInvitationStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void sendInvitations() {
-    final _$actionInfo = _$_EmailInvitationStoreActionController.startAction(
-        name: '_EmailInvitationStore.sendInvitations');
-    try {
-      return super.sendInvitations();
     } finally {
       _$_EmailInvitationStoreActionController.endAction(_$actionInfo);
     }

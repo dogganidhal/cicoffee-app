@@ -101,7 +101,7 @@ class EmailInvitationForm extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                           textColor: Theme.of(context).backgroundColor,
                           onPressed: () {
-                            _invitationEmail.sendInvitations();
+                            _invitationEmail.sendInvitations(team.id);
                             _navigationStore.pop();
                           },
                           child: Text("Invite".toUpperCase()),

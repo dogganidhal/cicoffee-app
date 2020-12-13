@@ -67,6 +67,13 @@ mixin _$TeamStore on _TeamStore, Store {
     return _$leaveTeamAsyncAction.run(() => super.leaveTeam(team));
   }
 
+  final _$joinTeamAsyncAction = AsyncAction('_TeamStore.joinTeam');
+
+  @override
+  Future<dynamic> joinTeam(String teamId) {
+    return _$joinTeamAsyncAction.run(() => super.joinTeam(teamId));
+  }
+
   @override
   String toString() {
     return '''

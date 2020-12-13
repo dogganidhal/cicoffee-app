@@ -490,7 +490,7 @@ class _TeamCardState extends State<TeamCard> {
             ),
           ),
         ),
-        content: EmailInvitationForm(),
+        content: EmailInvitationForm(team: widget.team),
       ),
     );
   }

@@ -78,4 +78,5 @@ abstract class _TeamStore with Store {
     }
     loadTeams();
   }
+
 }

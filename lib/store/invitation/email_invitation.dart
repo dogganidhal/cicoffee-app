@@ -38,8 +38,8 @@ abstract class _EmailInvitationStore with Store {
   }
 
   @action
-  void sendInvitations() {
-    // TODO(Ahmed): Send invitation request to API
+  Future sendInvitations(String team) async {
+    await apiClient.teams.inviteEmail(team, values);
     values = [];
   }
 }

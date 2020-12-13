@@ -37,4 +37,9 @@ class TeamsApiClient extends HttpClient {
     final data = await post("/api/team/$teamId/members/$memberId");
     return TeamDto.fromJson(data);
   }
+
+  Future inviteEmail(String teamId, List<String> emails) async {
+    await post("/api/team/$teamId/invite", data: emails);
+
+  }
 }
