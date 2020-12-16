@@ -23,7 +23,7 @@ class SessionsApiClient extends HttpClient {
   }
 
   Future<SessionDto> confirmParticipation(String sessionId) async {
-    final data = await post("/api/session/$sessionId/confirm-participation}");
+    final data = await post("/api/session/$sessionId/confirm-participation");
     return SessionDto.fromJson(data);
   }
 

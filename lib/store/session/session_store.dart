@@ -96,4 +96,11 @@ abstract class _SessionStore with Store {
     await apiClient.sessions.confirmParticipation(session.id);
     loadSessions();
   }
+
+  @action
+  Future retract(SessionDto session) async {
+    loading = true;
+    await apiClient.sessions.retractParticipation(session.id);
+    loadSessions();
+  }
 }

@@ -86,7 +86,9 @@ class SessionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16)
                           ),
                           textColor: Theme.of(context).unselectedWidgetColor,
-                          onPressed: () => sessionStore.muteSession(session),
+                          onPressed: () {
+                            sessionStore.muteSession(session);
+                          },
                           icon: Icon(Icons.history),
                           label: Text("Maybe later".toUpperCase()),
                         ),
@@ -95,7 +97,7 @@ class SessionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16)
                           ),
                           textColor: Theme.of(context).primaryColor,
-                          onPressed: () {},
+                          onPressed: () => sessionStore.confirm(session),
                           icon: Icon(Icons.check),
                           label: Text("Confirm".toUpperCase()),
                         ),
@@ -118,7 +120,7 @@ class SessionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16)
                           ),
                           textColor: Theme.of(context).errorColor,
-                          onPressed: () {},
+                          onPressed: () => sessionStore.retract(session),
                           icon: Icon(Icons.close),
                           label: Text("Retract".toUpperCase()),
                         ),
@@ -127,7 +129,9 @@ class SessionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16)
                           ),
                           textColor: Theme.of(context).primaryColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/show-session');
+                          },
                           icon: Icon(Icons.arrow_forward_rounded),
                           label: Text("Show".toUpperCase()),
                         ),
