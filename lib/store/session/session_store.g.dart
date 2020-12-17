@@ -106,6 +106,13 @@ mixin _$SessionStore on _SessionStore, Store {
     return _$confirmAsyncAction.run(() => super.confirm(session));
   }
 
+  final _$retractAsyncAction = AsyncAction('_SessionStore.retract');
+
+  @override
+  Future<dynamic> retract(SessionDto session) {
+    return _$retractAsyncAction.run(() => super.retract(session));
+  }
+
   @override
   String toString() {
     return '''

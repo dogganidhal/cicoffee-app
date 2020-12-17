@@ -38,7 +38,7 @@ class SessionsApiClient extends HttpClient {
   }
 
   Future<List<OrderDto>> getOrders(String sessionId) async {
-    final data = await get("/api/session/order");
+    final data = await get("/api/session/$sessionId/order");
     return (data as List)
         .map((item) => OrderDto.fromJson(item))
         .toList();

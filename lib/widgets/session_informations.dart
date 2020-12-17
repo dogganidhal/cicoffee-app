@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cicoffee_app/theme/assets.dart';
+import 'package:get_it/get_it.dart';
+import 'package:cicoffee_app/store/session_details/session_details_store.dart';
+
 
 class InfoSession extends StatelessWidget {
 
   InfoSession({Key key}) : super(key: key);
+  final SessionDetailsStore sessionDetailsStore = GetIt.instance.get<SessionDetailsStore>();
 
   @override
   Widget build(BuildContext context) {
