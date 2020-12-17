@@ -1,4 +1,5 @@
 import 'package:cicoffee_app/widgets/home.dart';
+import 'package:cicoffee_app/widgets/join_team.dart';
 import 'package:cicoffee_app/widgets/login.dart';
 import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:cicoffee_app/widgets/welcome.dart';
@@ -10,6 +11,7 @@ abstract class Router {
   static final String login = "/login";
   static final String signUp = "/sign-up";
   static final String home = "/home";
+  static final String joinQR = "/join-qr";
 
 
   static final Map<String, WidgetBuilder> routeBindings = {
@@ -17,6 +19,6 @@ abstract class Router {
     login: (context) => Login(),
     signUp: (context) => SignUp(),
     home: (context) => Home(),
-
+    joinQR: (contest) => JoinTeam()
   };
 }

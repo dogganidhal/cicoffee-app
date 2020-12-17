@@ -130,7 +130,7 @@ class SessionCard extends StatelessWidget {
                           ),
                           textColor: Theme.of(context).primaryColor,
                           onPressed: () {
-                            Navigator.pushNamed(context, '/show-session');
+                            Navigator.pushNamed(context, "session/${session.id}");
                           },
                           icon: Icon(Icons.arrow_forward_rounded),
                           label: Text("Show".toUpperCase()),

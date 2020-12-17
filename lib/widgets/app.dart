@@ -6,7 +6,7 @@ import 'package:flutter/material.dart' hide Router;
 import 'package:flutter/services.dart';
 import 'package:cicoffee_app/widgets/invitation_qrcode_generator.dart';
 import 'package:cicoffee_app/widgets/join_team.dart';
-import 'package:cicoffee_app/widgets/session_informations.dart';
+import 'package:cicoffee_app/widgets/session_details.dart';
 
 class CICoffeeApp extends StatelessWidget {
   final Environment environment;
@@ -53,17 +53,16 @@ class CICoffeeApp extends StatelessWidget {
       ),
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name);
-        if(uri.pathSegments.first == 'invitation-qr'){
+        if(uri.pathSegments.first == 'invitation-qr') {
           final id = uri.pathSegments[1];
           return MaterialPageRoute(builder: (context) => InvitationQRGenerator(teamId: id));
         }
-        if(uri.pathSegments.first == 'join-qr'){
-          final id = uri.pathSegments[0];
-          return MaterialPageRoute(builder: (context) => JoinTeam());
+        if(uri.pathSegments.first == 'session') {
+          final id = uri.pathSegments[1];
+          return MaterialPageRoute(builder: (context) => SessionDetails(sessionId: id));
         }
-        if(uri.pathSegments.first == 'show-session'){
-          final id = uri.pathSegments[0];
-          return MaterialPageRoute(builder: (context) => InfoSession());
+        if(uri.pathSegments.first == 'join-qr') {
+          return MaterialPageRoute(builder: (context) => JoinTeam());
         }
         return MaterialPageRoute(builder: (context) => Container());
       },

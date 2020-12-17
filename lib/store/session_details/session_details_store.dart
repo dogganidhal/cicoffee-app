@@ -17,26 +17,35 @@ class SessionDetailsStore = _SessionDetailsStore with _$SessionDetailsStore;
 abstract class _SessionDetailsStore with Store {
   final ApiClient apiClient;
 
-  _SessionDetailsStore({@required this.apiClient}) {
-
-  }
+  SessionDto session;
 
   @observable
   bool loading = false;
 
-
   @observable
   List<ParticipantOrders> participants = List.empty();
 
-  @action
-  Future loadParticipants() async {
-    loading = true;
-    try {
-      List<SessionDto> sessions = await apiClient.sessions.getMemberSessions();
+  _SessionDetailsStore({this.apiClient});
 
-    } on ApiError catch (apiError) {
-      print(apiError);
-    }
+  @action
+  Future loadParticipants(String sessionId) async {
+    loading = true;
+    final session = await apiClient.sessions.getById(sessionId);
+    participants = session.participants
+      .map((participant) {
+        var orderIfAny;
+        try {
+          orderIfAny = session.orders
+              .firstWhere((element) => element.member.id == participant.id);
+        } catch (_) {
+          orderIfAny = null;
+        }
+        return ParticipantOrders(
+          member: participant,
+          order: orderIfAny
+        );
+      })
+      .toList();
     loading = false;
   }
 

@@ -15,6 +15,11 @@ class SessionsApiClient extends HttpClient {
     return SessionDto.fromJson(data);
   }
 
+  Future<SessionDto> getById(String id) async {
+    final data = await get("/api/session/$id");
+    return SessionDto.fromJson(data);
+  }
+
   Future<List<SessionDto>> getMemberSessions() async {
     final data = await get("/api/session");
     return (data as List)
