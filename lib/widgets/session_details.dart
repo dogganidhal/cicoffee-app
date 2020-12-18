@@ -3,6 +3,7 @@ import 'package:cicoffee_app/theme/assets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:cicoffee_app/store/session_details/session_details_store.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
 class SessionDetails extends StatefulWidget {
@@ -71,7 +72,16 @@ class _SessionDetailsState extends State<SessionDetails> {
             itemCount: sessionDetailsStore.participants.length
           );
         }
-      )
+      ),
+      floatingActionButton: SpeedDial(
+        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
+        overlayColor: Theme.of(context).shadowColor,
+        overlayOpacity: 0.4,
+        onPress: () => {
+          Navigator.pushNamed(context, 'products')
+        },
+      ),
     );
   }
 
@@ -128,4 +138,5 @@ class _SessionDetailsState extends State<SessionDetails> {
   ),
   ),
   );
+
 }

@@ -11,6 +11,7 @@ import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:cicoffee_app/store/sign_up/sign_up_store.dart';
 import 'package:cicoffee_app/store/invitation/email_invitation.dart';
 import 'package:cicoffee_app/store/session_details/session_details_store.dart';
+import 'package:cicoffee_app/store/participant_order/participant_order_store.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -92,5 +93,6 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
   GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
   GetIt.instance.registerSingleton<EmailInvitationStore>(EmailInvitationStore(apiClient: apiClient));
   GetIt.instance.registerSingleton<SessionDetailsStore>(SessionDetailsStore(apiClient: apiClient));
+  GetIt.instance.registerSingleton<ParticipantOrderStore>(ParticipantOrderStore(apiClient: apiClient));
 
 }

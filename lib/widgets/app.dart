@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:cicoffee_app/widgets/invitation_qrcode_generator.dart';
 import 'package:cicoffee_app/widgets/join_team.dart';
 import 'package:cicoffee_app/widgets/session_details.dart';
+import 'package:cicoffee_app/widgets/product_cart.dart';
 
 class CICoffeeApp extends StatelessWidget {
   final Environment environment;
@@ -63,6 +64,9 @@ class CICoffeeApp extends StatelessWidget {
         }
         if(uri.pathSegments.first == 'join-qr') {
           return MaterialPageRoute(builder: (context) => JoinTeam());
+        }
+        if(uri.pathSegments.first == 'products') {
+          return MaterialPageRoute(builder: (context) => ProductCart());
         }
         return MaterialPageRoute(builder: (context) => Container());
       },
