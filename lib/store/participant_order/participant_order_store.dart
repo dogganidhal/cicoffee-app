@@ -1,6 +1,6 @@
 import 'package:cicoffee_app/api/client/api_client.dart';
 import 'package:cicoffee_app/api/dto/product_dto.dart';
-import 'package:cicoffee_app/api/dto/order_item_dto.dart';
+import 'package:cicoffee_app/api/dto/create_order_item_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:cicoffee_app/api/exception/api_exception.dart';
 import 'package:cicoffee_app/service/session.dart';
@@ -21,34 +21,57 @@ abstract class _ParticipantOrderStore with Store {
   List<ProductDto> products;
 
   @observable
-  List<OrderItemDto> orderItems;
+  List<CreateOrderItemDto> orderItems = List<CreateOrderItemDto>();
 
   _ParticipantOrderStore({@required this.apiClient}) {
-    loadOrderItems();
   }
 
   @action
   Future loadOrderItems() async {
     loading = true;
-
     products = await apiClient.products.getProducts();
-
-
     loading = false;
 
   }
   @action
   Future addItem(ProductDto product){
+    loading = false;
 
-    var existingItem = orderItems.singleWhere((element) => element.product.id == product.id,
-        orElse: () => null);
+    var existingItem;
+    try {
+      existingItem = orderItems.singleWhere((element) =>
+      element.productId == product.id, orElse: () => null);
 
+    }catch (Exception){
+      existingItem = null;
+    }
     if (existingItem != null){
-      orderItems.add(new OrderItemDto(quantity: existingItem.quantity + 1, product: product));
+      existingItem.quantity = existingItem.quantity+1;
     }
     else {
-      orderItems.add(new OrderItemDto(quantity: 1, product: product));
+      orderItems.add(new CreateOrderItemDto(quantity: 1, productId: product.id));
     }
   }
 
+  @action
+  Future removeItem(ProductDto product){
+    loading = false;
+
+    var existingItem;
+    try {
+      existingItem = orderItems.singleWhere((element) =>
+      element.productId == product.id, orElse: () => null);
+
+    }catch (Exception){
+      existingItem = null;
+    }
+    if (existingItem != null) {
+      if (existingItem.quantity > 0) {
+        existingItem.quantity = existingItem.quantity-1;
+      }
+      else{
+        existingItem.quantity = 0;
+      }
+    }
+  }
 }

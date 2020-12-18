@@ -93,6 +93,6 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
   GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
   GetIt.instance.registerSingleton<EmailInvitationStore>(EmailInvitationStore(apiClient: apiClient));
   GetIt.instance.registerSingleton<SessionDetailsStore>(SessionDetailsStore(apiClient: apiClient));
-  GetIt.instance.registerSingleton<ParticipantOrderStore>(ParticipantOrderStore(apiClient: apiClient));
+  GetIt.instance.registerFactory<ParticipantOrderStore>(() => (ParticipantOrderStore(apiClient: apiClient)));
 
 }
