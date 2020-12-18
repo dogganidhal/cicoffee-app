@@ -3,6 +3,7 @@ import 'package:cicoffee_app/theme/assets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:cicoffee_app/store/session_details/session_details_store.dart';
+import 'package:cicoffee_app/store/participant_order/participant_order_store.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
@@ -17,11 +18,13 @@ class SessionDetails extends StatefulWidget {
 
 class _SessionDetailsState extends State<SessionDetails> {
   final SessionDetailsStore sessionDetailsStore = GetIt.instance.get<SessionDetailsStore>();
+  final ParticipantOrderStore participantOrderStore = GetIt.instance.get<ParticipantOrderStore>();
 
   @override
   void initState() {
     super.initState();
     sessionDetailsStore.loadParticipants(widget.sessionId);
+    participantOrderStore.loadOrderItems();
   }
 
   @override
@@ -126,7 +129,7 @@ class _SessionDetailsState extends State<SessionDetails> {
                           SizedBox(height: 12),
 
                           Text(
-                            "Hello"
+                              participantOrderStore.orderItems.length.toString()
                           ),
                         ],
                       ),

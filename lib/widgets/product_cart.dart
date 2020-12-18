@@ -15,7 +15,6 @@ class ProductCart extends StatelessWidget {
   final GlobalKey productKey = GlobalKey();
   final ParticipantOrderStore participantOrderStore = GetIt.instance.get<ParticipantOrderStore>();
 
-
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -51,7 +50,8 @@ class ProductCart extends StatelessWidget {
               ],
          ),
      ),
-    body: Observer(
+      body: Observer(
+
        builder: (context) {
      return ListView.separated(
          padding: EdgeInsets.all(12),
@@ -61,7 +61,35 @@ class ProductCart extends StatelessWidget {
      );
    }
     ),
-    );
+    bottomNavigationBar: BottomAppBar(
+    shape: CircularNotchedRectangle(),
+    notchMargin: 4.0,
+    child:
+      ButtonTheme(
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child:
+
+          FlatButton(
+            height: 40,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24)
+            ),
+            color: Theme.of(context).primaryColor,
+            textColor: Theme.of(context).backgroundColor,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+                "Order"
+            ),
+          ),
+        ),
+      ),
+
+    ),
+
+   );
   }
 
   Widget _orderItems(BuildContext context, ProductDto product) => Container(
@@ -149,6 +177,7 @@ class ProductCart extends StatelessWidget {
               ],
             ),
           ),
+
         ],
       ),
     ),
