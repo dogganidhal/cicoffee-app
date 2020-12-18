@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cicoffee_app/theme/assets.dart';
 import 'package:cicoffee_app/api/dto/product_dto.dart';
+import 'package:cicoffee_app/api/dto/create_order_dto.dart';
 import 'package:cicoffee_app/store/participant_order/participant_order_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:cicoffee_app/api/client/api_client.dart';
 
 
 class ProductCart extends StatelessWidget {
@@ -14,6 +16,8 @@ class ProductCart extends StatelessWidget {
 
   final GlobalKey productKey = GlobalKey();
   final ParticipantOrderStore participantOrderStore = GetIt.instance.get<ParticipantOrderStore>();
+  final ApiClient apiClient = GetIt.instance.get<ApiClient>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +82,7 @@ class ProductCart extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).backgroundColor,
             onPressed: () {
+              apiClient.sessions.order(CreateOrderDto(items: participantOrderStore.orderItems));
               Navigator.pop(context);
             },
             child: Text(

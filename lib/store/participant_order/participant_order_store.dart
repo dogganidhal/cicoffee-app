@@ -66,12 +66,13 @@ abstract class _ParticipantOrderStore with Store {
       existingItem = null;
     }
     if (existingItem != null) {
-      if (existingItem.quantity > 0) {
+      if (existingItem.quantity > 1) {
         existingItem.quantity = existingItem.quantity-1;
       }
       else{
-        existingItem.quantity = 0;
+        orderItems.remove(existingItem);
       }
     }
   }
+
 }
