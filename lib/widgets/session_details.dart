@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:cicoffee_app/theme/assets.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-import 'package:cicoffee_app/store/session_details/session_details_store.dart';
 import 'package:cicoffee_app/store/participant_order/participant_order_store.dart';
+import 'package:cicoffee_app/store/session_details/session_details_store.dart';
+import 'package:cicoffee_app/theme/assets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
+import 'package:get_it/get_it.dart';
 
 class SessionDetails extends StatefulWidget {
   final String sessionId;
@@ -17,14 +16,16 @@ class SessionDetails extends StatefulWidget {
 }
 
 class _SessionDetailsState extends State<SessionDetails> {
-  final SessionDetailsStore sessionDetailsStore = GetIt.instance.get<SessionDetailsStore>();
-  final ParticipantOrderStore participantOrderStore = GetIt.instance.get<ParticipantOrderStore>();
+  final SessionDetailsStore sessionDetailsStore =
+      GetIt.instance.get<SessionDetailsStore>();
+  final ParticipantOrderStore participantOrderStore =
+      GetIt.instance.get<ParticipantOrderStore>();
 
   @override
   void initState() {
     super.initState();
     sessionDetailsStore.loadParticipants(widget.sessionId);
-    participantOrderStore.loadOrderItems();
+    participantOrderStore.loadProducts();
   }
 
   @override
@@ -46,100 +47,81 @@ class _SessionDetailsState extends State<SessionDetails> {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Pausa Café",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline5
-                    .copyWith(
-                    color: Theme
-                        .of(context)
-                        .primaryColorDark,
-                    fontWeight: FontWeight.bold
-                ),
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                    color: Theme.of(context).primaryColorDark,
+                    fontWeight: FontWeight.bold),
               ),
             )
           ],
         ),
       ),
-      body: Observer(
-        builder: (context) {
-          if (sessionDetailsStore.loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.separated(
-            padding: EdgeInsets.all(12),
-            itemBuilder: (context, index) => _participantOrders(sessionDetailsStore.participants[index]),
-            separatorBuilder: (context, _) => SizedBox(height: 12),
-            itemCount: sessionDetailsStore.participants.length
+      body: Observer(builder: (context) {
+        if (sessionDetailsStore.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
           );
         }
-      ),
+        return ListView.separated(
+            padding: EdgeInsets.all(12),
+            itemBuilder: (context, index) =>
+                _participantOrders(sessionDetailsStore.participants[index]),
+            separatorBuilder: (context, _) => SizedBox(height: 12),
+            itemCount: sessionDetailsStore.participants.length);
+      }),
       floatingActionButton: SpeedDial(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).primaryColor,
         overlayColor: Theme.of(context).shadowColor,
         overlayOpacity: 0.4,
-        onPress: () => {
-          Navigator.pushNamed(context, 'products')
-        },
+        onPress: () =>
+            {Navigator.pushNamed(context, "products/${widget.sessionId}")},
       ),
     );
   }
 
   Widget _participantOrders(ParticipantOrders participantOrders) => Container(
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Theme.of(context).dividerColor)
-    ),
-    child:
-      Padding(
-        padding: EdgeInsets.all(16),
-        child:
-          Column(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Theme.of(context).dividerColor)),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
             children: [
-                IntrinsicHeight(
+              IntrinsicHeight(
                 child: Row(
                   children: [
-                  Container(
-                  width: 4,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(2)
-                   ),
-                  ),
-                  SizedBox(width: 12),
-                  Flexible(
-                  fit: FlexFit.tight,
-                  child:
-                      Column(
+                    Container(
+                      width: 4,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(2)),
+                    ),
+                    SizedBox(width: 12),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              participantOrders.member.firstName + " " + participantOrders.member.lastName,
-                              style:
-                                Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                            participantOrders.member.firstName +
+                                " " +
+                                participantOrders.member.lastName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 12),
-
-                          Text(
-                              participantOrderStore.orderItems.length.toString()
-                          ),
+                          Text(participantOrders.order.items.length.toString()),
                         ],
                       ),
-                  ),
-],
-          ),
+                    ),
+                  ],
                 ),
-],
-  ),
-  ),
-  );
-
+              ),
+            ],
+          ),
+        ),
+      );
 }

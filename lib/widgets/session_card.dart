@@ -1,7 +1,7 @@
 import 'package:cicoffee_app/api/dto/session_dto.dart';
 import 'package:cicoffee_app/store/session/session_store.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
-import 'package:cicoffee_app/widgets/session_participation_state.dart';
+import 'package:cicoffee_app/widgets/session_participation.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -66,7 +66,7 @@ class SessionCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      SessionParticipationState(session: session),
+                      SessionParticipation(session: session),
                     ],
                   )
                 ],

@@ -46,13 +46,13 @@ abstract class _SessionDetailsStore with Store {
         );
       })
       .toList();
+    print(participants.map((p) => p.toJson()));
     loading = false;
   }
 
 }
 
 class ParticipantOrders {
-
   MemberDto member;
   OrderDto order;
 
@@ -61,4 +61,10 @@ class ParticipantOrders {
     this.order = order;
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'member': member.toJson(),
+      'order': order.toJson()
+    };
+  }
 }
