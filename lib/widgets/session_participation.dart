@@ -2,10 +2,10 @@ import 'package:cicoffee_app/api/dto/session_dto.dart';
 import 'package:flutter/material.dart';
 
 
-class SessionParticipationState extends StatelessWidget {
+class SessionParticipationStatus extends StatelessWidget {
   final SessionDto session;
 
-  const SessionParticipationState({
+  const SessionParticipationStatus({
     Key key,
     @required this.session
   }) : super(key: key);

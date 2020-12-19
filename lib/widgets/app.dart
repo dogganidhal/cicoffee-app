@@ -66,7 +66,8 @@ class CICoffeeApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => JoinTeam());
         }
         if(uri.pathSegments.first == 'products') {
-          return MaterialPageRoute(builder: (context) => ProductCart());
+          final id = uri.pathSegments[1];
+          return MaterialPageRoute(builder: (context) => ProductCart(sessionId: id));
         }
         return MaterialPageRoute(builder: (context) => Container());
       },

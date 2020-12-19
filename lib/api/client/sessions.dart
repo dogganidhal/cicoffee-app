@@ -37,8 +37,8 @@ class SessionsApiClient extends HttpClient {
     return SessionDto.fromJson(data);
   }
 
-  Future<OrderDto> order(CreateOrderDto request) async {
-    final data = await post("/api/session/order", data: request);
+  Future<OrderDto> order(String sessionId, CreateOrderDto request) async {
+    final data = await post("/api/session/$sessionId/order", data: request);
     return OrderDto.fromJson(data);
   }
 

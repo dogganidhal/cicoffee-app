@@ -31,34 +31,39 @@ abstract class _SessionDetailsStore with Store {
   Future loadParticipants(String sessionId) async {
     loading = true;
     final session = await apiClient.sessions.getById(sessionId);
-    participants = session.participants
-      .map((participant) {
+    participants = session.team.members
+      .map((member) {
         var orderIfAny;
         try {
           orderIfAny = session.orders
-              .firstWhere((element) => element.member.id == participant.id);
+              .firstWhere((element) => element.member.id == member.id);
         } catch (_) {
           orderIfAny = null;
         }
         return ParticipantOrders(
-          member: participant,
-          order: orderIfAny
+          member: member,
+          order: orderIfAny,
+          confirmed: session.participants.where((participant) => participant.id == member.id).isNotEmpty
         );
       })
       .toList();
+    print(participants.map((p) => p.toJson()));
     loading = false;
   }
 
 }
 
 class ParticipantOrders {
-
   MemberDto member;
   OrderDto order;
+  bool confirmed;
 
-  ParticipantOrders({MemberDto member, OrderDto order}) {
-    this.member = member;
-    this.order = order;
+  ParticipantOrders({this.order, this.member, this.confirmed});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'member': member.toJson(),
+      'order': order?.toJson()
+    };
   }
-
 }

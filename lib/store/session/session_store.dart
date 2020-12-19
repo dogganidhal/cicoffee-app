@@ -19,7 +19,7 @@ abstract class _SessionStore with Store {
   bool loading = false;
 
   @observable
-  List<SessionDto> sessions;
+  List<SessionDto> sessions = [];
 
   @observable
   List<String> mutedSessions = List.empty(growable: true);
