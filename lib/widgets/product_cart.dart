@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:cicoffee_app/store/session_details/session_details_store.dart';
 import 'package:flutter/material.dart';
 import 'package:cicoffee_app/theme/assets.dart';
@@ -50,7 +53,7 @@ class ProductCart extends StatelessWidget {
         return ListView.separated(
           padding: EdgeInsets.all(12),
           itemBuilder: (context, index) =>
-              _orderItems(context, participantOrderStore.products[index]),
+              _product(context, participantOrderStore.products[index]),
           separatorBuilder: (context, _) => SizedBox(height: 12),
           itemCount: participantOrderStore.loading
               ? 0
@@ -78,7 +81,7 @@ class ProductCart extends StatelessWidget {
     );
   }
 
-  Widget _orderItems(BuildContext context, ProductDto product) => Container(
+  Widget _product(BuildContext context, ProductDto product) => Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).dividerColor),
           borderRadius: BorderRadius.circular(24),
@@ -89,43 +92,25 @@ class ProductCart extends StatelessWidget {
             children: [
               IntrinsicHeight(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 4,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(2)),
+                      width: 56,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                          child: Image.network(product.photoUrl)
+                      )
                     ),
                     SizedBox(width: 12),
                     Flexible(
                       fit: FlexFit.tight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .copyWith(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 12),
-                          /*
-                      Container(
-                        margin: EdgeInsets.only(right: 8, left: 8, top: 8, bottom: 8),
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(14)),
-                            color: Colors.blue.shade200,
-                            image: DecorationImage(
-                                image:  NetworkImage(product.photoUrl)
-                            )
-                       ),
-                      ),
-                      */
-                        ],
+                      child: Text(
+                        product.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                     IconButton(

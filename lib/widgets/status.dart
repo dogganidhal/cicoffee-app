@@ -2,26 +2,20 @@ import 'package:cicoffee_app/api/dto/session_dto.dart';
 import 'package:flutter/material.dart';
 
 
-class SessionParticipationStatus extends StatelessWidget {
-  final SessionDto session;
+class Status extends StatelessWidget {
+  final String selectedText;
+  final String unselectedText;
+  final bool selected;
 
-  const SessionParticipationStatus({
-    Key key,
-    @required this.session
+  const Status({
+    Key key, this.selectedText, this.unselectedText, this.selected,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = session.currentMemberParticipating ?
+    final color = selected ?
       Colors.green :
       Theme.of(context).unselectedWidgetColor;
-    final text = session.currentMemberParticipating ?
-        session.currentMemberCreator ?
-            "Leader" :
-            "Accepted" :
-        session.past ?
-          "Missed" :
-          "Pending";
     return Container(
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -31,7 +25,7 @@ class SessionParticipationStatus extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          text.toUpperCase(),
+          (selected ? selectedText : unselectedText).toUpperCase(),
           style: Theme.of(context)
             .textTheme
             .caption

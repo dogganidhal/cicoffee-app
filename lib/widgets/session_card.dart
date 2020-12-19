@@ -66,7 +66,7 @@ class SessionCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      SessionParticipation(session: session),
+                      SessionParticipationStatus(session: session),
                     ],
                   )
                 ],

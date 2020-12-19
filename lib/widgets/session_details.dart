@@ -1,6 +1,7 @@
 import 'package:cicoffee_app/store/participant_order/participant_order_store.dart';
 import 'package:cicoffee_app/store/session_details/session_details_store.dart';
 import 'package:cicoffee_app/theme/assets.dart';
+import 'package:cicoffee_app/widgets/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -93,7 +94,9 @@ class _SessionDetailsState extends State<SessionDetails> {
                     Container(
                       width: 4,
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: participantOrders.confirmed ?
+                            Theme.of(context).primaryColor :
+                            Theme.of(context).unselectedWidgetColor,
                           borderRadius: BorderRadius.circular(2)),
                     ),
                     SizedBox(width: 12),
@@ -113,9 +116,13 @@ class _SessionDetailsState extends State<SessionDetails> {
                                     fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 12),
-                          Text(participantOrders.order.items.length.toString()),
+
                         ],
                       ),
+                    ),
+                    Status(selected: participantOrders.confirmed,
+                        selectedText: "Participating",
+                        unselectedText: "Not participating"
                     ),
                   ],
                 ),
