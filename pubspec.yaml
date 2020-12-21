@@ -26,6 +26,10 @@ dependencies:
   flutter_chips_input: ^1.9.4
   qr_flutter: ^3.1.0
   qrscan: ^0.2.21
+  firebase_messaging: ^5.1.2
+  onesignal_flutter: ^2.0.0
+  device_info: ^0.4.2+10
+
 
 dev_dependencies:
   flutter_test:

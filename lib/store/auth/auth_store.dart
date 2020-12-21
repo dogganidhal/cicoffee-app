@@ -1,13 +1,16 @@
 import 'package:cicoffee_app/api/client/api_client.dart';
 import 'package:cicoffee_app/api/dto/login_dto.dart';
+import 'package:cicoffee_app/api/dto/create_mobile_device_dto.dart';
 import 'package:cicoffee_app/api/dto/member_dto.dart';
 import 'package:cicoffee_app/api/dto/token_dto.dart';
 import 'package:cicoffee_app/service/session.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-
-
+import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:device_info/device_info.dart';
+import 'dart:io' show Platform;
 part 'auth_store.g.dart';
 
 
@@ -50,6 +53,18 @@ abstract class _AuthStore with Store {
     await session.persistCredentials(token);
     member = await apiClient.members.getMember();
     await session.setMember(member);
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    var name;
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      name = androidInfo.model;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      name = iosInfo.utsname.machine;
+    }
+    apiClient.members.registerDevice(CreateMobileDeviceDto(name: name, identifier: status.subscriptionStatus.userId));
     await navigationStore.navigateToHome();
   }
 
