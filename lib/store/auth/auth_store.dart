@@ -74,6 +74,8 @@ abstract class _AuthStore with Store {
     token = null;
     await session.clearCredentials();
     await session.clearMember();
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    apiClient.members.unregisterDevice(status.subscriptionStatus.userId);
     navigationStore.navigateToWelcome();
   }
 
