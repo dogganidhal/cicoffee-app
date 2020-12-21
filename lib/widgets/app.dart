@@ -10,10 +10,10 @@ import 'package:cicoffee_app/widgets/session_details.dart';
 import 'package:cicoffee_app/widgets/product_cart.dart';
 
 class CICoffeeApp extends StatelessWidget {
-  final Environment environment;
+  final Config config;
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
 
-  CICoffeeApp({Key key, @required this.environment}) : super(key: key);
+  CICoffeeApp({Key key, @required this.config}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class CICoffeeApp extends StatelessWidget {
       ),
       routes: Router.routeBindings,
       home: AppConfigurer(
-        environment: environment,
+        config: config,
         navigatorKey: _navigatorKey,
         child: AuthLoader(),
       ),

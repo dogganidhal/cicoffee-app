@@ -1,18 +1,20 @@
 import 'package:cicoffee_app/config/config.dart';
 import 'package:cicoffee_app/config/container.dart';
+import 'package:cicoffee_app/config/onesignal.dart';
+import 'package:cicoffee_app/config/dynamic_links.dart';
 import 'package:flutter/material.dart';
 
 
 class AppConfigurer extends StatefulWidget {
   final Widget child;
   final GlobalKey<NavigatorState> navigatorKey;
-  final Environment environment;
+  final Config config;
 
   AppConfigurer({
     Key key,
     @required this.child,
     @required this.navigatorKey,
-    @required this.environment
+    @required this.config
   }) : super(key: key);
 
   @override
@@ -23,7 +25,9 @@ class _AppConfigurerState extends State<AppConfigurer> {
   @override
   void initState() {
     super.initState();
-    configureContainer(widget.environment, widget.navigatorKey);
+    configureContainer(widget.config, widget.navigatorKey);
+    configureOneSignal(widget.config);
+    configureDynamicLinks(widget.config, context);
   }
 
   @override

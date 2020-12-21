@@ -4,5 +4,5 @@ import 'package:flutter/material.dart';
 
 
 void main() {
-  runApp(CICoffeeApp(environment: Environment.STG));
+  runApp(CICoffeeApp(config: Config.stg()));
 }

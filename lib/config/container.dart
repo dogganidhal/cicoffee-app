@@ -17,27 +17,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 
 
-void configureContainer(Environment environment, GlobalKey<NavigatorState> navigatorKey) {
-  Config config;
-  switch(environment) {
-    case Environment.LOCAL:
-      config = Config.local();
-      break;
-    case Environment.DEV:
-      config = Config.dev();
-      break;
-    case Environment.STG:
-      config = Config.stg();
-      break;
-    case Environment.PRD:
-      config = Config.prd();
-      break;
-    case Environment.TEST:
-      config = Config.test();
-      break;
-  }
-
-  _configureSession(config);
+void configureContainer(Config config, GlobalKey<NavigatorState> navigatorKey) {
+    _configureSession(config);
   _configureDio(config);
   _configureStores(navigatorKey);
 }

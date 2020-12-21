@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "896287657035",
+    "project_id": "pausa-cafe-7b9b3",
+    "storage_bucket": "pausa-cafe-7b9b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896287657035:android:d2c6d78c8f2943685c51ce",
+        "android_client_info": {
+          "package_name": "com.softkall.cicoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896287657035-a8lnvj8dvnv27r4u4uomiveff76anqdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCny0lVNKOVuhCzQbjRhXNCzv2d5GkDebw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896287657035-a8lnvj8dvnv27r4u4uomiveff76anqdm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "896287657035-ojluvpkcf723105ncseqcjscah9n2o0a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.softkall.cicoffee"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
