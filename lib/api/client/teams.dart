@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cicoffee_app/api/client/http_client.dart';
+import 'package:cicoffee_app/api/dto/create_invite_dto.dart';
 import 'package:cicoffee_app/api/dto/create_team_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
 import 'package:meta/meta.dart';
@@ -38,8 +41,8 @@ class TeamsApiClient extends HttpClient {
     return TeamDto.fromJson(data);
   }
 
-  Future inviteEmail(String teamId, List<String> emails) async {
-    await post("/api/team/$teamId/invite", data: emails);
+  Future inviteEmail(String teamId, CreateInviteDto request) async {
+    await post("/api/team/$teamId/invite", data: request);
 
   }
 }

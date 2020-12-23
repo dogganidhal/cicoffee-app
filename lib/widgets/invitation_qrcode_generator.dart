@@ -43,11 +43,13 @@ class InvitationQRGenerator extends StatelessWidget {
         padding: EdgeInsets.only(top: 70),
         child:  Column(
                   children: [
-                    Text(
-                      "Scan QR Code to join the team",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                    Center(
+                      child: Text(
+                        "Scan QR Code to join the team",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     Expanded(

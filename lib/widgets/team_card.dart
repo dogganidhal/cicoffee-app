@@ -481,7 +481,7 @@ class _TeamCardState extends State<TeamCard> {
         ),
         title: Center(
           child: Text(
-            "New session".toUpperCase(),
+            "email invitation".toUpperCase(),
             style: Theme.of(context)
                 .textTheme
                 .headline6

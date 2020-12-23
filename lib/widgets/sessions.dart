@@ -58,11 +58,7 @@ class _SessionsState extends State<Sessions> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
-      ),
+
     );
   }
 

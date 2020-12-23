@@ -44,7 +44,7 @@ class Welcome extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 32, bottom: 24),
                 child: Text(
-                  "Lorem ipsum dolor sit amet.",
+                  "Take a coffee break.",
                   style: Theme.of(context)
                       .textTheme
                       .headline4
@@ -55,7 +55,7 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               Text(
-                "Integer malesuada aliquam congue duis mattis.",
+                "Enjoy it with your best colleagues !",
                 style: Theme.of(context)
                     .textTheme
                     .button

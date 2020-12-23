@@ -142,37 +142,37 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     SizedBox(height: 24),
-                  ],
-                Center(
-                    child: Text(
-                      "Or, login with",
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                        .copyWith(fontSize: 16, fontWeight: FontWeight.w600)
-                    )
-                ),
-                SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Image.asset(
-                        Assets.google,
-                        height: 36,
-                      ),
-                      onPressed: () {},
-                    ),
-                    SizedBox(width: 48),
-                    IconButton(
-                      icon: Image.asset(
-                          Assets.facebook,
-                          height: 36
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
+                //   ],
+                // Center(
+                //     child: Text(
+                //       "Or, login with",
+                //       style: Theme.of(context)
+                //           .textTheme
+                //           .caption
+                //         .copyWith(fontSize: 16, fontWeight: FontWeight.w600)
+                //     )
+                // ),
+                // SizedBox(height: 24),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     IconButton(
+                //       icon: Image.asset(
+                //         Assets.google,
+                //         height: 36,
+                //       ),
+                //       onPressed: () {},
+                //     ),
+                //     SizedBox(width: 48),
+                //     IconButton(
+                //       icon: Image.asset(
+                //           Assets.facebook,
+                //           height: 36
+                //       ),
+                //       onPressed: () {},
+                //     ),
+                   ],
+                // ),
                 SizedBox(height: 24),
                 Spacer(),
                 FlatButton(
