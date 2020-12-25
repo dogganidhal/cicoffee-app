@@ -381,9 +381,8 @@ class _TeamCardState extends State<TeamCard> {
                             return;
                           }
                           final values = _createSessionFormKey.currentState.value;
-                          final DateTime startDate = values["startDate"];
-                          final DateTime endDate = values["endDate"];
-
+                          final DateTime startDate = values["startDate"].toUtc();
+                          final DateTime endDate = values["endDate"].toUtc();
                           navigationStore.pop();
                           sessionStore.createSession(widget.team, startDate, endDate);
                         },
