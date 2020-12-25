@@ -48,7 +48,7 @@ abstract class _AuthStore with Store {
   }
 
   @action
-  Future login(String email, String password) async {
+  Future login(String email, String password, String teamId) async {
     token = await apiClient.auth.login(LoginDto(email: email, password: password));
     await session.persistCredentials(token);
     member = await apiClient.members.getMember();
@@ -64,6 +64,7 @@ abstract class _AuthStore with Store {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       name = iosInfo.utsname.machine;
     }
+    var team = apiClient.teams.joinTeam(teamId);
     apiClient.members.registerDevice(CreateMobileDeviceDto(name: name, identifier: status.subscriptionStatus.userId));
     await navigationStore.navigateToHome();
   }

@@ -18,11 +18,11 @@ abstract class _LoginStore with Store {
   _LoginStore({@required this.authStore});
 
   @action
-  Future login(String email, String password) async {
+  Future login(String email, String password, String teamId) async {
     error = null;
     loading = true;
     try {
-      await authStore.login(email, password);
+      await authStore.login(email, password, teamId);
     } on ApiError catch (error) {
       this.error = error;
     }
