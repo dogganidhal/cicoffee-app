@@ -1,20 +1,20 @@
 import 'package:cicoffee_app/config/config.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cicoffee_app/widgets/sign_up.dart';
+import 'package:flutter/material.dart' hide Router;
+import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 
 
-void configureDynamicLinks(Config config, BuildContext context) async {
+void configureDynamicLinks(Config config, NavigationStore navigationStore) async {
   FirebaseDynamicLinks.instance.onLink(
     onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
       if (deepLink != null) {
         if (deepLink.queryParameters.containsKey('teamId')) {
           String id = deepLink.queryParameters['teamId'];
-          String path = deepLink.path;
-          print(deepLink.path);
-          Navigator.pushNamed(context, deepLink.path);
+          navigationStore.navigateToLogin(id);
         }
-        Navigator.pushNamed(context, deepLink.path);
       }
     },
     onError: (OnLinkErrorException e) async {

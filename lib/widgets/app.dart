@@ -66,7 +66,7 @@ class CICoffeeApp extends StatelessWidget {
         if(uri.pathSegments.first == 'join-qr') {
           return MaterialPageRoute(builder: (context) => JoinTeam());
         }
-        if(uri.pathSegments.first == '/email-invite') {
+        if(uri.pathSegments.first == 'email-invite') {
           return MaterialPageRoute(builder: (context) => Login());
         }
         if(uri.pathSegments.first == 'products') {

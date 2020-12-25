@@ -1,16 +1,21 @@
 import 'package:cicoffee_app/widgets/teams.dart';
 import 'package:cicoffee_app/widgets/sessions.dart';
 import 'package:cicoffee_app/widgets/settings.dart';
+import 'package:cicoffee_app/store/team/team_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 
 
 class Home extends StatefulWidget {
+  final teamStore = GetIt.instance.get<TeamStore>();
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {

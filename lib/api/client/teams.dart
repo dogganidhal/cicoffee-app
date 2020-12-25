@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cicoffee_app/api/client/http_client.dart';
 import 'package:cicoffee_app/api/dto/create_invite_dto.dart';
 import 'package:cicoffee_app/api/dto/create_team_dto.dart';

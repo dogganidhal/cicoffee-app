@@ -23,8 +23,8 @@ abstract class _NavigationStore with Store {
   }
 
   @action
-  Future navigateToLogin() async {
-    navigatorKey.currentState.pushNamed("/login");
+  Future navigateToLogin([Object argument]) async {
+    navigatorKey.currentState.pushNamed("/login", arguments: argument);
   }
 
   @action

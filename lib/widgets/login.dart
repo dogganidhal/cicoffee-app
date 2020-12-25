@@ -204,8 +204,9 @@ class _LoginState extends State<Login> {
     final values = _formKey.currentState.value;
     final String email = values["email"];
     final String password = values["password"];
-
+    var arguments = ModalRoute.of(context).settings.arguments;
     widget.loginStore.login(email, password);
+
   }
 
   void _togglePasswordObscureText() {

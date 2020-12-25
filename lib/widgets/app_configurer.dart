@@ -3,7 +3,7 @@ import 'package:cicoffee_app/config/container.dart';
 import 'package:cicoffee_app/config/onesignal.dart';
 import 'package:cicoffee_app/config/dynamic_links.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get_it/get_it.dart';
 
 class AppConfigurer extends StatefulWidget {
   final Widget child;
@@ -27,7 +27,7 @@ class _AppConfigurerState extends State<AppConfigurer> {
     super.initState();
     configureContainer(widget.config, widget.navigatorKey);
     configureOneSignal(widget.config);
-    configureDynamicLinks(widget.config, context);
+    configureDynamicLinks(widget.config, GetIt.instance.get());
   }
 
   @override
