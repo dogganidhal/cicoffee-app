@@ -37,7 +37,7 @@ Future<String> createDynamicLink(String teamId) async {
     iosParameters: IosParameters(
       bundleId: "com.softkall.cicoffee",
         minimumVersion: '1',
-        appStoreId: '',
+        appStoreId: '123456789',
     ),
   );
   final link = await parameters.buildUrl();

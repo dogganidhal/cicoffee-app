@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>com.softkall.cicoffee</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>cicoffee-dynalink</string>
+			<string>com.softkall.cicoffee</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>https://pausa-cafe.ga</string>
@@ -58,9 +58,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>FirebaseDynamicLinksCustomDomains</key>
-    <array>
-      <string>https://pausa-cafe.ga</string>
-    </array>
 </dict>
 </plist>
