@@ -46,6 +46,8 @@ abstract class HttpClient {
 
   @alwaysThrows
   void _catchException(DioError dioError) {
+    print(dioError.message);
+    print(dioError);
     throw ApiError.fromDioError(dioError);
   }
 }

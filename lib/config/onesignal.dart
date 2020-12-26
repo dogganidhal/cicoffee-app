@@ -15,5 +15,4 @@ void configureOneSignal(Config config) {
       }
   );
   OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-  OneSignal.shared.promptUserForPushNotificationPermission();
 }
