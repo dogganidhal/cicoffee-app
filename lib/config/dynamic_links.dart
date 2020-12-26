@@ -5,6 +5,7 @@ import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 
+// https://pausa-cafe.ga/vVoNvR6mrPg8m2Jf7
 
 void configureDynamicLinks(Config config, NavigationStore navigationStore) async {
   FirebaseDynamicLinks.instance.onLink(
