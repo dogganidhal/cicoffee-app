@@ -8,12 +8,13 @@ import 'package:get_it/get_it.dart';
 
 
 class Sessions extends StatefulWidget {
+  final SessionStore sessionStore = GetIt.instance.get<SessionStore>();
   @override
   _SessionsState createState() => _SessionsState();
 }
 
 class _SessionsState extends State<Sessions> {
-  final SessionStore sessionStore = GetIt.instance.get<SessionStore>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +49,9 @@ class _SessionsState extends State<Sessions> {
                 ),
               ),
               ...(
-                  sessionStore.loading ?
+                  widget.sessionStore.loading ?
                   [_loader] :
-                  sessionStore.sessions.isEmpty ?
+                  widget.sessionStore.sessions.isEmpty ?
                   [_emptyPlaceholder] :
                   _sessions
               )
@@ -91,20 +92,20 @@ class _SessionsState extends State<Sessions> {
   );
 
   List<Widget> get _sessions => [
-    if (sessionStore.ongoingSessions.length > 0)
+    if (widget.sessionStore.ongoingSessions.length > 0)
       SliverStickyHeader(
           header: _sectionStickyHeader("Ongoing"),
-          sliver: _sliverList(sessionStore.ongoingSessions)
+          sliver: _sliverList(widget.sessionStore.ongoingSessions)
       ),
-    if (sessionStore.incomingSessions.length > 0)
+    if (widget.sessionStore.incomingSessions.length > 0)
       SliverStickyHeader(
           header: _sectionStickyHeader("Incoming"),
-          sliver: _sliverList(sessionStore.incomingSessions)
+          sliver: _sliverList(widget.sessionStore.incomingSessions)
       ),
-    if (sessionStore.pastSessions.length > 0)
+    if (widget.sessionStore.pastSessions.length > 0)
       SliverStickyHeader(
         header: _sectionStickyHeader("Earlier this day"),
-        sliver: _sliverList(sessionStore.pastSessions)
+        sliver: _sliverList(widget.sessionStore.pastSessions)
       )
   ];
 

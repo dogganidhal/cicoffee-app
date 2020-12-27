@@ -76,8 +76,9 @@ class Welcome extends StatelessWidget {
                 child: ButtonTheme(
                   height: 56,
                   minWidth: 164,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Wrap(
+                    spacing: 14,
+                    direction: Axis.horizontal,
                     children: <Widget>[
                       FlatButton(
                         shape: RoundedRectangleBorder(

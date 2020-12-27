@@ -94,6 +94,7 @@ abstract class _SessionStore with Store {
   Future confirm(SessionDto session) async {
     loading = true;
     await apiClient.sessions.confirmParticipation(session.id);
+    loading = false;
     loadSessions();
   }
 

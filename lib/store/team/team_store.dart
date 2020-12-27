@@ -23,16 +23,20 @@ abstract class _TeamStore with Store {
   bool loading = false;
 
   @observable
-  List<TeamDto> teams = List.empty();
+  List<TeamDto> teams = [];
 
   @action
   Future loadTeams() async {
     loading = true;
-    teams = await apiClient.teams.getTeams();
-    final currentMember = await session.getMember();
-    teams.forEach((element) {
-      element.currentMemberIsCreator = currentMember.id == element.creator.id;
-    });
+    try {
+      teams = await apiClient.teams.getTeams();
+      final currentMember = await session.getMember();
+      teams.forEach((element) {
+        element.currentMemberIsCreator = currentMember.id == element.creator.id;
+      });
+    } catch (e){
+      print(e);
+    }
     loading = false;
   }
 

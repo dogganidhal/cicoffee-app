@@ -70,7 +70,7 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
     apiClient: apiClient,
     navigationStore: navigationStore
   ));
-  GetIt.instance.registerSingleton<TeamStore>(TeamStore(apiClient: apiClient, session: session));
+  GetIt.instance.registerFactory<TeamStore>(() => TeamStore(apiClient: apiClient, session: session));
   GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
   GetIt.instance.registerSingleton<EmailInvitationStore>(EmailInvitationStore(apiClient: apiClient));
   GetIt.instance.registerSingleton<SessionDetailsStore>(SessionDetailsStore(apiClient: apiClient));

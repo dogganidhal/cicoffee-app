@@ -64,7 +64,9 @@ abstract class _AuthStore with Store {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       name = iosInfo.utsname.machine;
     }
-    var team = apiClient.teams.joinTeam(teamId);
+    if (teamId != null) {
+      await apiClient.teams.joinTeam(teamId);
+    }
     apiClient.members.registerDevice(CreateMobileDeviceDto(name: name, identifier: status.subscriptionStatus.userId));
     await navigationStore.navigateToHome();
   }
