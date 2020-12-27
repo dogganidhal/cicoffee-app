@@ -58,20 +58,24 @@ void _configureStores(GlobalKey<NavigatorState> navigatorKey) {
   final session = GetIt.instance.get<Session>();
   final apiClient = GetIt.instance.get<ApiClient>();
   final navigationStore = NavigationStore(navigatorKey: navigatorKey);
+  final sessionStore = SessionStore(apiClient: apiClient, session: session);
+  final teamStore = TeamStore(apiClient: apiClient, session: session);
   final authStore = AuthStore(
     session: session,
     apiClient: apiClient,
-    navigationStore: navigationStore
+    navigationStore: navigationStore,
+    sessionStore: sessionStore,
+    teamStore: teamStore
   );
   GetIt.instance.registerSingleton<NavigationStore>(navigationStore);
   GetIt.instance.registerSingleton<AuthStore>(authStore);
-  GetIt.instance.registerFactory<LoginStore>(() => LoginStore(authStore: authStore));
-  GetIt.instance.registerFactory<SignUpStore>(() => SignUpStore(
+  GetIt.instance.registerSingleton<LoginStore>(LoginStore(authStore: authStore));
+  GetIt.instance.registerSingleton<SignUpStore>( SignUpStore(
     apiClient: apiClient,
     navigationStore: navigationStore
   ));
-  GetIt.instance.registerFactory<TeamStore>(() => TeamStore(apiClient: apiClient, session: session));
-  GetIt.instance.registerSingleton<SessionStore>(SessionStore(apiClient: apiClient, session: session));
+  GetIt.instance.registerFactory<TeamStore>(() => (teamStore));
+  GetIt.instance.registerFactory<SessionStore>(() => (sessionStore));
   GetIt.instance.registerSingleton<EmailInvitationStore>(EmailInvitationStore(apiClient: apiClient));
   GetIt.instance.registerSingleton<SessionDetailsStore>(SessionDetailsStore(apiClient: apiClient));
   GetIt.instance.registerFactory<ParticipantOrderStore>(() => (ParticipantOrderStore(apiClient: apiClient)));

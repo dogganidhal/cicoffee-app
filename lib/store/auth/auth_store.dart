@@ -5,6 +5,8 @@ import 'package:cicoffee_app/api/dto/member_dto.dart';
 import 'package:cicoffee_app/api/dto/token_dto.dart';
 import 'package:cicoffee_app/service/session.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
+import 'package:cicoffee_app/store/team/team_store.dart';
+import 'package:cicoffee_app/store/session/session_store.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ abstract class _AuthStore with Store {
   final Session session;
   final ApiClient apiClient;
   final NavigationStore navigationStore;
+  final TeamStore teamStore;
+  final SessionStore sessionStore;
 
   @observable
   bool loading = true;
@@ -31,7 +35,7 @@ abstract class _AuthStore with Store {
   @observable
   TokenDto token;
 
-  _AuthStore({@required this.session, @required this.apiClient, @required this.navigationStore});
+  _AuthStore({@required this.session, @required this.apiClient, @required this.navigationStore, @required this.teamStore, @required this.sessionStore});
 
   @computed
   bool get userConnected => token != null && member != null;
@@ -68,6 +72,8 @@ abstract class _AuthStore with Store {
       await apiClient.teams.joinTeam(teamId);
     }
     apiClient.members.registerDevice(CreateMobileDeviceDto(name: name, identifier: status.subscriptionStatus.userId));
+    teamStore.loadTeams();
+    sessionStore.loadSessions();
     await navigationStore.navigateToHome();
   }
 
@@ -79,6 +85,8 @@ abstract class _AuthStore with Store {
     await session.clearMember();
     var status = await OneSignal.shared.getPermissionSubscriptionState();
     apiClient.members.unregisterDevice(status.subscriptionStatus.userId);
+    sessionStore.resetSessions();
+    teamStore.resetTeams();
     navigationStore.navigateToWelcome();
   }
 

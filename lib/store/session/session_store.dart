@@ -104,4 +104,10 @@ abstract class _SessionStore with Store {
     await apiClient.sessions.retractParticipation(session.id);
     loadSessions();
   }
+  @action
+  void resetSessions() {
+
+    sessions = [];
+    mutedSessions = [];
+  }
 }
