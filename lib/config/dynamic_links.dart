@@ -3,9 +3,13 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:flutter/material.dart' hide Router;
+import 'package:get_it/get_it.dart';
+import 'package:cicoffee_app/store/auth/auth_store.dart';
+import 'package:cicoffee_app/api/client/api_client.dart';
 import 'package:cicoffee_app/store/navigation/navigation_store.dart';
 
 // https://pausa-cafe.ga/vVoNvR6mrPg8m2Jf7
+final authStore = GetIt.instance.get<AuthStore>();
 
 void configureDynamicLinks(Config config, NavigationStore navigationStore) async {
   FirebaseDynamicLinks.instance.onLink(
@@ -14,7 +18,14 @@ void configureDynamicLinks(Config config, NavigationStore navigationStore) async
       if (deepLink != null) {
         if (deepLink.queryParameters.containsKey('teamId')) {
           String id = deepLink.queryParameters['teamId'];
+          if(!authStore.userConnected){
           navigationStore.navigateToLogin(id);
+          }
+          else{
+            authStore.apiClient.teams.joinTeam(id);
+            authStore.teamStore.loadTeams();
+            navigationStore.navigateToHome(id);
+          }
         }
       }
     },

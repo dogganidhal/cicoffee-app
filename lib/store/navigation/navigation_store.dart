@@ -12,9 +12,9 @@ abstract class _NavigationStore with Store {
   _NavigationStore({@required this.navigatorKey});
 
   @action
-  Future navigateToHome() async {
+  Future navigateToHome([Object argument]) async {
     _popAll();
-    navigatorKey.currentState.pushReplacementNamed("/home");
+    navigatorKey.currentState.pushReplacementNamed("/home", arguments: argument);
   }
 
   @action
