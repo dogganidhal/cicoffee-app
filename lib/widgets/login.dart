@@ -125,6 +125,18 @@ class _LoginState extends State<Login> {
                   obscureText: _isPasswordTextObscure,
                   validator: FormBuilderValidators.required(context)
                 ),
+                FlatButton(
+                  child: Text("Forgot Password ?",
+                    style: Theme.of(context).textTheme.subtitle1
+                        .copyWith(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600
+                    )
+                  ),
+                  onPressed: () => {
+                    Navigator.pushNamed(context, '/reset-password')
+                  },
+                ),
                 SizedBox(height: 24),
                 if (widget.loginStore.error != null)
                   ...[
@@ -190,6 +202,7 @@ class _LoginState extends State<Login> {
                       "Login"
                   ),
                 ),
+
               ],
             ),
           ),
@@ -211,4 +224,6 @@ class _LoginState extends State<Login> {
   void _togglePasswordObscureText() {
     setState(() => _isPasswordTextObscure = !_isPasswordTextObscure);
   }
+
+
 }

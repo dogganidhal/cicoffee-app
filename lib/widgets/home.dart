@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 
 class Home extends StatefulWidget {
-  final teamStore = GetIt.instance.get<TeamStore>();
+  final TeamStore teamStore = GetIt.instance.get<TeamStore>();
+
 
   @override
   _HomeState createState() => _HomeState();
@@ -16,6 +17,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

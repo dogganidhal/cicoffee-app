@@ -18,4 +18,8 @@ class AuthApiClient extends HttpClient {
     final data = await post("/api/auth/refresh", data: request);
     return TokenDto.fromJson(data);
   }
+
+  Future resetPassword(String email) async {
+    await get("/api/auth/reset-password/$email");
+  }
 }

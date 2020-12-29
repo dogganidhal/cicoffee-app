@@ -19,12 +19,10 @@ void configureDynamicLinks(Config config, NavigationStore navigationStore) async
         if (deepLink.queryParameters.containsKey('teamId')) {
           String id = deepLink.queryParameters['teamId'];
           if(!authStore.userConnected){
-          navigationStore.navigateToLogin(id);
+            navigationStore.navigateToLogin(id);
           }
           else{
-            authStore.apiClient.teams.joinTeam(id);
-            authStore.teamStore.loadTeams();
-            navigationStore.navigateToHome(id);
+            authStore.teamStore.joinTeam(id);
           }
         }
       }
