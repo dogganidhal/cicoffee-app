@@ -17,7 +17,7 @@ class Config {
   );
 
   factory Config.stg() => Config._(
-    apiBaseUrl: "https://api.pausa-cafe.ga",
+    apiBaseUrl: "http://localhost:8080",
       oneSignalAppId: "1f57b5ae-8c76-441e-8dfd-228898defbcc"
   );
 
