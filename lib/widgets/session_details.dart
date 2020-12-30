@@ -129,7 +129,7 @@ class _SessionDetailsState extends State<SessionDetails> {
                 ),
 
               ),
-              participantOrders.order != null ? OrderItem(order: participantOrders.order) : Container(),
+              participantOrders.order != null && participantOrders.confirmed ? OrderItem(order: participantOrders.order) : Container(),
             ],
           ),
         ),
