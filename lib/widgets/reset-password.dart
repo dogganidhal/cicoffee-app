@@ -127,6 +127,7 @@ class _ResetPassword extends State<ResetPassword> {
     final values = _formKey.currentState.value;
     final String email = values["email"];
     widget.resetPasswordStore.resetPassword(email);
+    Navigator.popAndPushNamed(context, '/login');
   }
 
 }
