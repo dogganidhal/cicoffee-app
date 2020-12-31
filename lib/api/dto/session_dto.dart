@@ -3,6 +3,7 @@
 import 'package:cicoffee_app/api/dto/member_dto.dart';
 import 'package:cicoffee_app/api/dto/order_dto.dart';
 import 'package:cicoffee_app/api/dto/team_dto.dart';
+import 'package:intl/intl.dart';
 
 class SessionDto {
   bool currentMemberParticipating;
@@ -26,10 +27,10 @@ class SessionDto {
       id = json['id'];
       startDate = json['startDate'] == null
         ? null
-        : DateTime.parse(json['startDate']);
+        : DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['startDate'], true);
       endDate = json['endDate'] == null
         ? null
-        : DateTime.parse(json['endDate']);
+        : DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['endDate'], true);
       team = TeamDto.fromJson(json['team']);
       author = MemberDto.fromJson(json['author']);
       orders = OrderDto.listFromJson(json['orders']);
@@ -46,9 +47,9 @@ class SessionDto {
   List<OrderDto> orders;
   List<MemberDto> participants;
 
-  bool get ongoing => startDate.isBefore(DateTime.now()) && endDate.isAfter(DateTime.now());
-  bool get incoming => startDate.isAfter(DateTime.now());
-  bool get past => endDate.isBefore(DateTime.now());
+  bool get ongoing => startDate.toUtc().isBefore(DateTime.now().toUtc()) && endDate.toUtc().isAfter(DateTime.now().toUtc());
+  bool get incoming => startDate.toUtc().isAfter(DateTime.now().toUtc());
+  bool get past => endDate.toUtc().isBefore(DateTime.now().toUtc());
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is SessionDto &&

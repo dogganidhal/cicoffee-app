@@ -50,6 +50,11 @@ abstract class _SessionStore with Store {
       final member = await session.getMember();
       sessions = await apiClient.sessions.getMemberSessions();
       sessions = sessions
+        .map((session) {
+          // session.startDate = session.startDate.toLocal();
+          // session.endDate = session.endDate.toLocal();
+          return session;
+        })
         .where((element) => !mutedSessions.contains(element.id))
         .toList();
       sessions.forEach((session) {
