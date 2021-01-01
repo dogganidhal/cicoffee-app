@@ -40,7 +40,7 @@ class _TeamCardState extends State<TeamCard> {
           border: Border.all(color: Theme.of(context).dividerColor)
       ),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(10),
         child: Column(
           children: [
             IntrinsicHeight(

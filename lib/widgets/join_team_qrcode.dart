@@ -97,6 +97,8 @@ class _ScanPhoto extends State<ScanPhoto> {
         this.barCode = barCode;
       });
       teamStore.joinTeam(barCode);
+      Navigator.pop(context);
+
     } catch(e) {
       setState(() {
         this.barCode = 'Unknown error';
