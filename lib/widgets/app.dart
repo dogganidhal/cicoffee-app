@@ -6,6 +6,7 @@ import 'package:flutter/material.dart' hide Router;
 import 'package:flutter/services.dart';
 import 'package:cicoffee_app/widgets/invitation_qrcode_generator.dart';
 import 'package:cicoffee_app/widgets/join_team.dart';
+import 'package:cicoffee_app/widgets/join_team_qrcode.dart';
 import 'package:cicoffee_app/widgets/session_details.dart';
 import 'package:cicoffee_app/widgets/product_cart.dart';
 import 'package:cicoffee_app/widgets/login.dart';
@@ -65,7 +66,7 @@ class CICoffeeApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => SessionDetails(sessionId: id));
         }
         if(uri.pathSegments.first == 'join-qr') {
-          return MaterialPageRoute(builder: (context) => JoinTeam());
+          return MaterialPageRoute(builder: (context) => ScanPhoto());
         }
         if(uri.pathSegments.first == 'email-invite') {
           return MaterialPageRoute(builder: (context) => Login());

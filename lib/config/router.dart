@@ -1,5 +1,5 @@
 import 'package:cicoffee_app/widgets/home.dart';
-import 'package:cicoffee_app/widgets/join_team.dart';
+import 'package:cicoffee_app/widgets/join_team_qrcode.dart';
 import 'package:cicoffee_app/widgets/login.dart';
 import 'package:cicoffee_app/widgets/sign_up.dart';
 import 'package:cicoffee_app/widgets/welcome.dart';
@@ -19,6 +19,6 @@ abstract class Router {
     login: (context) => Login(),
     signUp: (context) => SignUp(),
     home: (context) => Home(),
-    joinQR: (contest) => JoinTeam()
+    joinQR: (contest) => ScanPhoto()
   };
 }
