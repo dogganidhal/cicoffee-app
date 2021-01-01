@@ -75,30 +75,33 @@ class Welcome extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: ButtonTheme(
                   height: 56,
-                  minWidth: 164,
-                  child: Wrap(
-                    spacing: 14,
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)
+                  minWidth: 140,
+                  child: Center(
+                    child: Wrap(
+                      spacing: 14,
+                      runSpacing: 10,
+                      direction: Axis.horizontal,
+                      children: <Widget>[
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)
+                          ),
+                          color: Theme.of(context).primaryColor.withOpacity(0.15),
+                          textColor: Theme.of(context).primaryColor,
+                          onPressed: navigationStore.navigateToSignUp,
+                          child: Text("Sign up"),
                         ),
-                        color: Theme.of(context).primaryColor.withOpacity(0.15),
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: navigationStore.navigateToSignUp,
-                        child: Text("Sign up"),
-                      ),
-                      FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        textColor: Theme.of(context).backgroundColor,
-                        onPressed: navigationStore.navigateToLogin,
-                        child: Text("Login"),
-                      )
-                    ],
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)
+                          ),
+                          color: Theme.of(context).primaryColor,
+                          textColor: Theme.of(context).backgroundColor,
+                          onPressed: navigationStore.navigateToLogin,
+                          child: Text("Login"),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
