@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cicoffee_app/theme/assets.dart';
-//import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:cicoffee_app/store/team/team_store.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +10,6 @@ class JoinTeam extends StatelessWidget {
   JoinTeam({Key key}) : super(key: key);
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  TextEditingController _outputController = new TextEditingController();
 
   final TeamStore teamStore = GetIt.instance.get<TeamStore>();
 

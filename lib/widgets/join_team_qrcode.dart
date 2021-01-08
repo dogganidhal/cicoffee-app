@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cicoffee_app/theme/assets.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:cicoffee_app/store/team/team_store.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:get_it/get_it.dart';
 
 
@@ -92,7 +91,8 @@ class _ScanPhoto extends State<ScanPhoto> {
   Future _scanPhoto() async {
     // Parse to code string with uint8list
     try{
-      String barCode = await BarcodeScanner.scan();
+      ScanResult scanResult= await BarcodeScanner.scan();
+      String barCode = scanResult.rawContent;
       setState(() {
         this.barCode = barCode;
       });

@@ -42,13 +42,23 @@ abstract class _AuthStore with Store {
 
   @action
   Future loadFromDisk() async {
-    token = await session.getCredentials();
-    member = await session.getMember();
-    loading = false;
-    if (userConnected)
-      navigationStore.navigateToHome();
-    else
-      navigationStore.navigateToWelcome();
+    try {
+      token = await session.getCredentials();
+      member = await session.getMember();
+      loading = false;
+      if (userConnected)
+        navigationStore.navigateToHome();
+      else
+        navigationStore.navigateToWelcome();
+    } catch (exception) {
+      navigationStore.navigatorKey.currentState.push(MaterialPageRoute(
+        builder: (context) => Scaffold(
+          body: Center(
+            child: Text(exception.toString())
+          ),
+        )
+      ));
+    }
   }
 
   @action
