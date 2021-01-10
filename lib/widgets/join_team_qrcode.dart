@@ -97,6 +97,7 @@ class _ScanPhoto extends State<ScanPhoto> {
         this.barCode = barCode;
       });
       teamStore.joinTeam(barCode);
+      teamStore.loadTeams();
       Navigator.pop(context);
 
     } catch(e) {

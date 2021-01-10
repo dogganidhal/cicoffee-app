@@ -5,7 +5,6 @@ import 'package:cicoffee_app/widgets/auth_loader.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:flutter/services.dart';
 import 'package:cicoffee_app/widgets/invitation_qrcode_generator.dart';
-import 'package:cicoffee_app/widgets/join_team.dart';
 import 'package:cicoffee_app/widgets/join_team_qrcode.dart';
 import 'package:cicoffee_app/widgets/session_details.dart';
 import 'package:cicoffee_app/widgets/product_cart.dart';
